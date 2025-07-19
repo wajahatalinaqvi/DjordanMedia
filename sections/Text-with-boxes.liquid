@@ -31,8 +31,7 @@
       "default": 48,
       "min": 24,
       "max": 72,
-      "step": 1,
-      "unit": "px"
+      "step": 1
     },
     {
       "type": "range",
@@ -56,37 +55,21 @@
         },
         {
           "type": "color",
-          "id": "box_bg_from",
-          "label": "Box Background Gradient From",
-          "default": "#1A1A1A"
+          "id": "box_bg_color",
+          "label": "Box Background Color",
+          "default": "#000000"
         },
         {
           "type": "color",
-          "id": "box_bg_to",
-          "label": "Box Background Gradient To",
-          "default": "#2A2A2A"
-        },
-        {
-          "type": "range",
-          "id": "box_bg_opacity",
-          "label": "Box Background Opacity",
-          "default": 90,
-          "min": 0,
-          "max": 100,
-          "step": 5,
-          "unit": "%"
+          "id": "border_glow_from",
+          "label": "Border Glow Start Color",
+          "default": "#aaa490"
         },
         {
           "type": "color",
-          "id": "box_border_from",
-          "label": "Box Border Gradient From",
-          "default": "#4A90E2"
-        },
-        {
-          "type": "color",
-          "id": "box_border_to",
-          "label": "Box Border Gradient To",
-          "default": "#9B9B9B"
+          "id": "border_glow_middle", 
+          "label": "Border Glow Middle Color",
+          "default": "#ede6ca"
         },
         {
           "type": "header",
@@ -114,6 +97,22 @@
           "id": "icon_bg_opacity",
           "label": "Icon Background Opacity",
           "default": 90,
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%"
+        },
+        {
+          "type": "color",
+          "id": "icon_glow_color",
+          "label": "Icon Glow Color",
+          "default": "#ede6ca"
+        },
+        {
+          "type": "range",
+          "id": "icon_glow_intensity",
+          "label": "Icon Glow Intensity",
+          "default": 60,
           "min": 0,
           "max": 100,
           "step": 5,
@@ -315,38 +314,39 @@
 .box {
   position: relative;
   padding: 30px;
-  border-radius: 10px;
-  overflow: hidden;
+  border-left: 1px solid rgba(25, 25, 25, 0.8);
+  border-right: 1px solid rgba(25, 25, 25, 0.8);
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
 
 .box::before,
 .box::after {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 10px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--border-start-color, #aaa490) 25%,
+    var(--border-middle-color, #ede6ca) 50%,
+    var(--border-end-color, #aaa490) 75%,
+    transparent 100%
+  );
+  opacity: 0.5;
+  box-shadow: 0 0 10px #ede6ca;
 }
 
 .box::before {
-  z-index: -2;
-  padding: 2px;
-  border-radius: 12px;
-  background: linear-gradient(to bottom, var(--border-gradient-from), var(--border-gradient-to));
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  top: 0;
 }
 
 .box::after {
-  z-index: -1;
-  background: linear-gradient(to bottom, var(--bg-gradient-from), var(--bg-gradient-to));
-  opacity: var(--bg-opacity);
+  bottom: 0;
 }
 
 .icon-container {
@@ -354,8 +354,61 @@
   height: 60px;
   margin-bottom: 20px;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
+}
+
+.icon-container::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgb(232 217 158 / 65%) 0%, rgba(0, 0, 0, 0) 37%);
+  filter: blur(13px);
+  z-index: 0;
+}
+
+.icon-container::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--icon-glow-color, rgba(237, 230, 202, 0.3)) 10%,
+    rgba(0, 0, 0, 0) 60%
+  );
+  filter: blur(5px);
+  z-index: -2;
+  animation: sparkle 4s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 .icon-container img {
@@ -363,6 +416,9 @@
   height: 100%;
   object-fit: contain;
   padding: 15px;
+  position: relative;
+  z-index: 2;
+  border-radius: 50%;
 }
 
 .box-heading {
@@ -426,17 +482,18 @@
           {% if block.type == 'box' %}
             <div class="box" {{ block.shopify_attributes }} 
               style="
-                --bg-gradient-from: {{ block.settings.box_bg_from }};
-                --bg-gradient-to: {{ block.settings.box_bg_to }};
-                --bg-opacity: {{ block.settings.box_bg_opacity | divided_by: 100.0 }};
-                --border-gradient-from: {{ block.settings.box_border_from }};
-                --border-gradient-to: {{ block.settings.box_border_to }};
+                background-color: {{ block.settings.box_bg_color | default: '#0000' }};
+                --border-start-color: {{ block.settings.border_glow_from | default: '#aaa490' }};
+                --border-middle-color: {{ block.settings.border_glow_middle | default: '#ede6ca' }};
+                --border-end-color: {{ block.settings.border_glow_from | default: '#aaa490' }};
               ">
-              <div class="icon-container" style="background: linear-gradient(45deg, 
+              <div class="icon-container" style="
+                --icon-glow-color: {{ block.settings.icon_glow_color | default: block.settings.icon_bg_from | color_modify: 'alpha', block.settings.icon_glow_intensity | divided_by: 100.0 }};
+                background: linear-gradient(45deg, 
                 {{ block.settings.icon_bg_from | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }}, 
                 {{ block.settings.icon_bg_to | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }});">
                 {% if block.settings.icon %}
-                  <img src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.heading }}">
+                  <img src="{{ block.settings.icon | image_url: width: 60 }}" width="60" height="60" alt="{{ block.settings.heading }}">
                 {% endif %}
               </div>
               <h3 class="box-heading" style="background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.heading }}</h3>

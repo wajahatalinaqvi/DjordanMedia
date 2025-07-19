@@ -4,6 +4,7 @@
     padding: 60px 40px;
     color: #ffffff;
     font-family: 'Arial', sans-serif;
+    margin:0px !important;
   }
   
   .contact-form-custom .section-header__title {
@@ -77,24 +78,112 @@
     margin-bottom: 0;
   }
   
-  .contact-form-custom .btn {
-    background-color: #333333;
-    border: 1px solid #555555;
-    color: #ffffff;
-    padding: 15px 30px;
+  /* .contact-form-custom .btn {
+    display: inline-block;
+    padding: 15px 40px;
     font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: {{ section.settings.button_border_radius | default: 6 }}px;
+    background: #191919;
+    position: relative;
+    z-index: 1;
+    border: 1px solid #2a2a2a;
+    border-top: none;
+    border-bottom: none;
+    overflow: visible;
     transition: all 0.3s ease;
+    margin-top: 20px;
+    cursor: pointer;
     text-transform: none;
     letter-spacing: normal;
-    font-weight: normal;
-    margin-top: 20px;
+  } */
+  .contact-form-custom .btn {
+ display: inline-block;
+  padding: 15px 40px;
+  font-size: 16px;
+  font-weight: 300;
+  text-decoration: none;
+  border-radius: 6px;
+  background: #191919;
+  position: relative;
+  z-index: 1;
+  border: 1px solid #2a2a2a;
+  border-top: none;
+  border-bottom: none;
+  overflow: visible;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+  }
+  
+  .contact-form-custom .btn-text {
+    background: linear-gradient(
+      to right,
+      {{ section.settings.gradient_text_from | default: '#aaa490' }} 0%,
+      {{ section.settings.gradient_text_to | default: '#ede6ca' }} 80%,
+      {{ section.settings.gradient_text_from | default: '#aaa490' }} 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  
+  .contact-form-custom .btn::before,
+  .contact-form-custom .btn::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      #000 0%,
+      {{ section.settings.gradient_text_from | default: '#aaa490' }} 25%,
+      {{ section.settings.gradient_text_to | default: '#ede6ca' }} 50%,
+      {{ section.settings.gradient_text_from | default: '#aaa490' }} 75%,
+      #000 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 5px rgba(237, 230, 202, 0.5);
+  }
+  
+  .contact-form-custom .btn::before {
+    top: 0;
+  }
+  
+  .contact-form-custom .btn::after {
+    bottom: 0;
   }
   
   .contact-form-custom .btn:hover {
-    background-color: #4a4a4a;
-    border-color: #666666;
+    border-left: 1px solid #2a2a2a;
+    border-right: 1px solid #2a2a2a;
+    border-top: none;
+    border-bottom: none;
+    background-color: #1A1A1A !important;
+    background-clip: padding-box;
+  }
+  
+  .contact-form-custom .btn:hover::before,
+  .contact-form-custom .btn:hover::after {
+    opacity: 1;
+  }
+  
+  .contact-form-custom .gradient-text {
+    background: linear-gradient(to right, {{ section.settings.gradient_text_from | default: '#aaa490' }}, {{ section.settings.gradient_text_to | default: '#ede6ca' }});
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
   }
   
   .contact-form-custom .note--success {
@@ -206,7 +295,7 @@
 
         <label for="contact-form-submit-{{ section.id }}" class="hidden-label">{{ 'contact.form.send' | t }}</label>
         <button type="submit" id="contact-form-submit-{{ section.id }}" class="btn">
-          Submit
+          <span class="btn-text">Submit</span>
         </button>
 
         {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
@@ -369,6 +458,32 @@
       "id": "narrow_column",
       "label": "t:sections.contact-form.settings.narrow_column.label",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button Styling"
+    },
+    {
+      "type": "color",
+      "id": "gradient_text_from",
+      "label": "Button Gradient Start Color",
+      "default": "#aaa490"
+    },
+    {
+      "type": "color",
+      "id": "gradient_text_to",
+      "label": "Button Gradient End Color",
+      "default": "#ede6ca"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button Border Radius",
+      "default": 6
     }
   ],
   "presets": [
