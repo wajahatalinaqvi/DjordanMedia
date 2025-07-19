@@ -471,13 +471,13 @@
   font-weight: 400;
 }
 
-.subheading {
+.subheading > p {
   font-family: 'Poppins', sans-serif;
   font-size: {{ section.settings.subheading_font_size }}px;
-  color: #ffffff;
+  color: {{section.settings.subheading_color}};
   max-width: 720px;
   margin: 0 auto 30px;
-
+  -webkit-text-fill-color: {{section.settings.subheading_color}} !important;
   line-height: 1.6;
   text-transform: {{ section.settings.subheading_text_transform }};
   font-weight: 300;
@@ -616,13 +616,13 @@
   }
 
   .heading {
-    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-size: {{ section.settings.heading_font_size_mobile }}px !important;
     line-height: 1.15;
     margin-bottom: 15px;
   }
   
-  .subheading {
-    font-size: {{ section.settings.subheading_font_size_mobile }}px;
+  .subheading > p {
+    font-size: {{ section.settings.subheading_font_size_mobile }}px !important;
     line-height: 1.5;
     margin-bottom: 30px;
     letter-spacing: 0.2px;
@@ -680,7 +680,7 @@
   </div>
   
   <div class="subheading">
-    {{ section.settings.subheading }}
+   <p>{{ section.settings.subheading }}</p> 
   </div>
   
   <div class="buttons-container">

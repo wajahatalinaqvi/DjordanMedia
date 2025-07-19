@@ -66,7 +66,7 @@
       "type": "color",
       "id": "heading_gradient_to",
       "label": "Heading Gradient To",
-      "default": "#CCCCCC"
+      "default": "#FFFFFF"
     },
     {
       "type": "text",
@@ -98,13 +98,13 @@
       "type": "color",
       "id": "subheading_gradient_from",
       "label": "Subheading Gradient From",
-      "default": "#FFFFFF"
+      "default": "#D9D3B9"
     },
     {
       "type": "color",
       "id": "subheading_gradient_to",
       "label": "Subheading Gradient To",
-      "default": "#9B9B9B"
+      "default": "#A39E8B"
     },
     {
       "type": "header",
@@ -137,25 +137,25 @@
       "type": "color",
       "id": "button_border_from",
       "label": "Button Border Gradient From",
-      "default": "#4A90E2"
+      "default": "#191919"
     },
     {
       "type": "color",
       "id": "button_border_to",
       "label": "Button Border Gradient To",
-      "default": "#9B9B9B"
+      "default": "#D9D3B9"
     },
     {
       "type": "color",
       "id": "button_text_gradient_from",
       "label": "Button Text Gradient From",
-      "default": "#FFFFFF"
+      "default": "#D9D3B9"
     },
     {
       "type": "color",
       "id": "button_text_gradient_to",
       "label": "Button Text Gradient To",
-      "default": "#CCCCCC"
+      "default": "#A39E8B"
     },
     {
       "type": "header",
@@ -164,24 +164,30 @@
     {
       "type": "color",
       "id": "features_bg_from",
-      "label": "Features Box Background From",
-      "default": "#1A1A1A"
+      "label": "Features Box Background Start",
+      "default": "#000000D9"
+    },
+    {
+      "type": "color",
+      "id": "features_bg_middle",
+      "label": "Features Box Background Middle",
+      "default": "#2C2C2CCC"
     },
     {
       "type": "color",
       "id": "features_bg_to",
-      "label": "Features Box Background To",
-      "default": "#2A2A2A"
+      "label": "Features Box Background End",
+      "default": "#232323CC"
     },
     {
       "type": "range",
-      "id": "features_bg_opacity",
-      "label": "Features Box Background Opacity",
-      "default": 90,
+      "id": "features_bg_angle",
+      "label": "Features Box Gradient Angle",
+      "default": 120,
       "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%"
+      "max": 360,
+      "step": 10,
+      "unit": "deg"
     }
   ],
   "blocks": [
@@ -210,7 +216,7 @@
           "type": "color",
           "id": "text_gradient_to",
           "label": "Text Gradient To",
-          "default": "#CCCCCC"
+          "default": "#FFFFFF"
         },
         {
           "type": "range",
@@ -317,63 +323,97 @@
 .guidance-heading {
   margin-bottom: 40px;
   text-align: left;
+  line-height: 1;
 }
 
 .main-heading {
+  font-family: 'Poppins', sans-serif;
   font-size: {{ section.settings.heading_size_desktop }}px;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0;
-  line-height: 1.2;
-  background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
+  line-height: 1.1;
+  color: #FFFFFF;
+  display: block;
+  text-transform: capitalize !important;
+  letter-spacing: 0.5px;
 }
 
 .subheading {
+  font-family: 'Poppins', sans-serif;
   font-size: {{ section.settings.subheading_size_desktop }}px;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0;
+  display: block;
+  color: #FFFFFF;
+letter-spacing: 0.5px;  
+  text-transform: capitalize !important;
+
+}
+
+.gradient-word {
   background: linear-gradient(to right, {{ section.settings.subheading_gradient_from }}, {{ section.settings.subheading_gradient_to }});
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block;
+  font-weight: 500;
 }
-
 .features-container {
   position: relative;
   padding: 40px;
   border-radius: 8px;
-  background: linear-gradient(to right, 
-    {{ section.settings.features_bg_from | color_modify: 'alpha', section.settings.features_bg_opacity | divided_by: 100.0 }}, 
-    {{ section.settings.features_bg_to | color_modify: 'alpha', section.settings.features_bg_opacity | divided_by: 100.0 }});
+  background: linear-gradient(
+    {{ section.settings.features_bg_angle }}deg,
+    {{ section.settings.features_bg_from }} 25%,
+    {{ section.settings.features_bg_middle }} 75%,
+    {{ section.settings.features_bg_to }} 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(25, 25, 25, 0.8);
+  border-right: 1px solid rgba(25, 25, 25, 0.8);
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
 
-.features-container::before {
-  content: '';
+.features-container::before,
+.features-container::after {
+  content: "";
   position: absolute;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
-  z-index: -1;
-  border-radius: 10px;
-  background: linear-gradient(to right, {{ section.settings.button_border_from }}, {{ section.settings.button_border_to }});
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #aaa490 25%,
+    #ede6ca 50%,
+    #aaa490 75%,
+    transparent 100%
+  );
+  opacity: 0.8;
+  box-shadow: 0 0 8px #ede6ca;
+}
+
+.features-container::before {
+  top: 0;
+}
+
+.features-container::after {
+  bottom: 0;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 20px 40px;
 }
 
 .features-grid-wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 30px;
+  gap: 20px;
 }
 
 .feature-group {
@@ -384,18 +424,27 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: {{ block.settings.text_color }};
+  color: #FFFFFF;
+  margin-bottom: 10px;
 }
 
 .feature-item span {
   font-size: var(--feature-font-size, 16px);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.2px;
 }
 
 .check-icon {
   width: 20px;
   height: 20px;
   min-width: 20px;
-  fill: #4A90E2;
+  fill: none;
+  stroke: {{ section.settings.button_text_gradient_from }};
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 2px rgba(217, 211, 185, 0.3));
 }
 
 .feature-icon {
@@ -421,40 +470,75 @@
   display: inline-block;
   padding: 15px 40px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 300;
   text-decoration: none;
-  border-radius: 4px;
-  background: linear-gradient(to right, {{ section.settings.button_bg_from }}, {{ section.settings.button_bg_to }});
+  border-radius: 6px;
+  background: #191919;
   position: relative;
   z-index: 1;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  border: 1px solid #2a2a2a;
+  border-top: none;
+  border-bottom: none;
+  overflow: visible;
   transition: all 0.3s ease;
 }
 
 .guidance-button span {
-  background: linear-gradient(to right, {{ section.settings.button_text_gradient_from }}, {{ section.settings.button_text_gradient_to }});
+  background: linear-gradient(
+    to right,
+    {{ section.settings.button_text_gradient_from }} 0%,
+    {{ section.settings.button_text_gradient_to }} 80%,
+    {{ section.settings.button_text_gradient_from }} 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  position: relative;
+  z-index: 1;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.guidance-button::before,
+.guidance-button::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    #000 0%,
+    {{ section.settings.button_text_gradient_from }} 25%,
+    {{ section.settings.button_text_gradient_to }} 50%,
+    {{ section.settings.button_text_gradient_from }} 75%,
+    #000 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 5px rgba(237, 230, 202, 0.5);
 }
 
 .guidance-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
-  z-index: -1;
-  border-radius: 5px;
-  background: linear-gradient(to right, {{ section.settings.button_border_from }}, {{ section.settings.button_border_to }});
+  top: 0;
+}
+
+.guidance-button::after {
+  bottom: 0;
 }
 
 .guidance-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border-left: 1px solid #2a2a2a;
+  border-right: 1px solid #2a2a2a;
+  border-top: none;
+  border-bottom: none;
+  background-clip: padding-box;
+}
+
+.guidance-button:hover::before,
+.guidance-button:hover::after {
+  opacity: 1;
 }
 
 @media screen and (max-width: 768px) {
@@ -498,8 +582,8 @@
   <div class="guidance-container">
     <div class="text-side">
       <div class="guidance-heading">
-        <h2 class="main-heading">{{ section.settings.heading_text }}</h2>
-        <h2 class="subheading">{{ section.settings.subheading_text }}</h2>
+        <h2 class="main-heading">What You'll Get</h2>
+        <h2 class="subheading">inside the <span class="gradient-word">Course!</span></h2>
       </div>
 
       {% if section.settings.button_text != blank %}
@@ -519,11 +603,12 @@
               <div class="feature-item" style="--feature-font-size: {{ block.settings.font_size_desktop }}px; --feature-font-size-mobile: {{ block.settings.font_size_mobile }}px;">
                 {% if block.settings.icon %}
                   <div class="feature-icon">
-                    <img src="{{ block.settings.icon | img_url: 'small' }}" alt="{{ block.settings.text }}" loading="lazy">
+                    <img src="{{ block.settings.icon | image_url: width: 24 }}" width="24" height="24" alt="{{ block.settings.text }}" loading="lazy">
                   </div>
                 {% else %}
                   <svg class="check-icon" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+                    <path d="M9 12l2 2l4-4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 {% endif %}
                 <span style="background: linear-gradient(to right, {{ block.settings.text_gradient_from }}, {{ block.settings.text_gradient_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.text }}</span>
@@ -537,11 +622,12 @@
               <div class="feature-item" style="--feature-font-size: {{ block.settings.font_size_desktop }}px; --feature-font-size-mobile: {{ block.settings.font_size_mobile }}px;">
                 {% if block.settings.icon %}
                   <div class="feature-icon">
-                    <img src="{{ block.settings.icon | img_url: 'small' }}" alt="{{ block.settings.text }}" loading="lazy">
+                    <img src="{{ block.settings.icon | image_url: width: 24 }}" width="24" height="24" alt="{{ block.settings.text }}" loading="lazy">
                   </div>
                 {% else %}
                   <svg class="check-icon" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+                    <path d="M9 12l2 2l4-4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 {% endif %}
                 <span style="background: linear-gradient(to right, {{ block.settings.text_gradient_from }}, {{ block.settings.text_gradient_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.text }}</span>
