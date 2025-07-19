@@ -1,0 +1,259 @@
+{% schema %}
+{
+  "name": "Box Marquee with Text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marquee Settings"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll Speed (seconds)",
+      "default": 20,
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Box Settings"
+    },
+    {
+      "type": "range",
+      "id": "box_padding",
+      "label": "Box Padding (Desktop)",
+      "default": 20,
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "box_padding_mobile",
+      "label": "Box Padding (Mobile)",
+      "default": 15,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "box_gap",
+      "label": "Space Between Boxes (Desktop)",
+      "default": 20,
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "box_gap_mobile",
+      "label": "Space Between Boxes (Mobile)",
+      "default": 15,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "box_bg_from",
+      "label": "Box Background Gradient Start",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "box_bg_to",
+      "label": "Box Background Gradient End",
+      "default": "#2A2A2A"
+    },
+    {
+      "type": "header",
+      "content": "Text Settings"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_text",
+      "name": "Text Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Master After Effect"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Font Size (Desktop)",
+          "default": 18,
+          "min": 12,
+          "max": 40,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font Size (Mobile)",
+          "default": 14,
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "text_gradient_from",
+          "label": "Text Gradient Start",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "text_gradient_to",
+          "label": "Text Gradient End",
+          "default": "#9B9B9B"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Box Marquee with Text",
+      "blocks": [
+        {
+          "type": "marquee_text",
+          "settings": {
+            "text": "Master After Effect"
+          }
+        },
+        {
+          "type": "marquee_text",
+          "settings": {
+            "text": "What You Will Get?"
+          }
+        },
+        {
+          "type": "marquee_text",
+          "settings": {
+            "text": "Step Plugin With Course"
+          }
+        },
+        {
+          "type": "marquee_text",
+          "settings": {
+            "text": "What You'll Learn?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.marquee-section {
+  overflow: hidden;
+  padding: 20px 0;
+  background: #000000;
+  position: relative;
+  width: 100%;
+}
+
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.marquee-container {
+  display: flex;
+  animation: scroll {{ section.settings.scroll_speed }}s linear infinite;
+  white-space: nowrap;
+  width: fit-content;
+  gap: {{ section.settings.box_gap }}px;
+}
+
+.marquee-box {
+  background: linear-gradient(to right, {{ section.settings.box_bg_from }}, {{ section.settings.box_bg_to }});
+  padding: {{ section.settings.box_padding }}px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: max-content;
+}
+
+.marquee-text {
+  background: linear-gradient(to right, var(--text-gradient-from), var(--text-gradient-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .marquee-box {
+    padding: {{ section.settings.box_padding_mobile }}px;
+  }
+  
+  .marquee-container {
+    gap: {{ section.settings.box_gap_mobile }}px;
+  }
+  
+  .marquee-container-clone {
+    margin-left: {{ section.settings.box_gap_mobile }}px;
+  }
+}
+</style>
+
+<div class="marquee-section">
+  <div class="marquee-container">
+    {% for block in section.blocks %}
+      <div class="marquee-box">
+        <div class="marquee-text"
+             style="
+               font-size: {{ block.settings.font_size }}px;
+               --text-gradient-from: {{ block.settings.text_gradient_from }};
+               --text-gradient-to: {{ block.settings.text_gradient_to }};">
+          {{ block.settings.text }}
+        </div>
+      </div>
+    {% endfor %}
+    {% for block in section.blocks %}
+      <div class="marquee-box">
+        <div class="marquee-text"
+             style="
+               font-size: {{ block.settings.font_size }}px;
+               --text-gradient-from: {{ block.settings.text_gradient_from }};
+               --text-gradient-to: {{ block.settings.text_gradient_to }};">
+          {{ block.settings.text }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% style %}
+@media screen and (max-width: 768px) {
+  {% for block in section.blocks %}
+    #shopify-section-{{ section.id }} .marquee-box:nth-child({{ forloop.index }}) .marquee-text {
+      font-size: {{ block.settings.font_size_mobile }}px;
+    }
+  {% endfor %}
+}
+{% endstyle %}
