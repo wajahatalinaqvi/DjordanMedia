@@ -1,0 +1,1002 @@
+{% schema %}
+{
+  "name": "Custom Reviews",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Heading Settings"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "What our Users Say"
+    },
+    {
+      "type": "text",
+      "id": "colored_word",
+      "label": "Word to Highlight",
+      "default": "Users",
+      "info": "This word in the heading will have a different color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "colored_word_color",
+      "label": "Highlighted Word Color",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading Size (Desktop)",
+      "default": 42,
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Size (Mobile)",
+      "default": 32,
+      "min": 18,
+      "max": 50,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Reviews Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_reviews_per_row",
+      "label": "Maximum Reviews per Row",
+      "default": 3,
+      "min": 1,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Slider",
+      "default": true,
+      "info": "Automatically converts to slider when there are more than 4 reviews"
+    },
+    {
+      "type": "select",
+      "id": "slider_mode",
+      "label": "Slider Mode",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto (Slider when > 4 reviews)"
+        },
+        {
+          "value": "always",
+          "label": "Always Slider"
+        },
+        {
+          "value": "never",
+          "label": "Never Slider"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider Speed (ms)",
+      "default": 5000,
+      "min": 2000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Slider Dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "review_background",
+      "label": "Review Box Background (Solid)",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_gradient_background",
+      "label": "Use Gradient Background for Reviews",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "review_gradient_background",
+      "label": "Review Box Gradient Background",
+      "default": "linear-gradient(135deg, #1A1A1A, #333333)"
+    },
+    {
+      "type": "range",
+      "id": "review_padding",
+      "label": "Review Box Padding",
+      "default": 30,
+      "min": 15,
+      "max": 50,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "review_border_radius",
+      "label": "Review Box Border Radius",
+      "default": 8,
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "quote_size",
+      "label": "Quote Icon Size",
+      "default": 40,
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Icon Color",
+      "default": "#4A90E2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Reviewer Details"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image",
+          "label": "Reviewer Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_image_background",
+          "label": "Add Gradient Background to Image",
+          "default": true
+        },
+        {
+          "type": "color_background",
+          "id": "image_background",
+          "label": "Image Background Gradient",
+          "default": "linear-gradient(135deg, #4A90E2, #50E3C2)"
+        },
+        {
+          "type": "range",
+          "id": "image_bg_opacity",
+          "label": "Image Background Opacity",
+          "default": 60,
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "John Smith"
+        },
+        {
+          "type": "color",
+          "id": "name_color",
+          "label": "Name Color (Solid)",
+          "default": "#4A90E2"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_name_gradient",
+          "label": "Use Gradient for Name",
+          "default": false
+        },
+        {
+          "type": "color_background",
+          "id": "name_gradient",
+          "label": "Name Gradient",
+          "default": "linear-gradient(to right, #4A90E2, #50E3C2)"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_title",
+          "label": "Reviewer Title",
+          "default": "Motion Graphics Designer"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color (Solid)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_title_gradient",
+          "label": "Use Gradient for Title",
+          "default": false
+        },
+        {
+          "type": "color_background",
+          "id": "title_gradient",
+          "label": "Title Gradient",
+          "default": "linear-gradient(to right, #FFFFFF, #CCCCCC)"
+        },
+        {
+          "type": "range",
+          "id": "name_size_desktop",
+          "label": "Name Font Size (Desktop)",
+          "default": 18,
+          "min": 14,
+          "max": 30,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "name_size_mobile",
+          "label": "Name Font Size (Mobile)",
+          "default": 16,
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "title_size_desktop",
+          "label": "Title Font Size (Desktop)",
+          "default": 14,
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "title_size_mobile",
+          "label": "Title Font Size (Mobile)",
+          "default": 12,
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "header",
+          "content": "Review Content"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "This course completely transformed my After Effects skills! What once was hard to follow, and required advanced technical approach, I can now create professional motion graphics and animations for my clients."
+        },
+        {
+          "type": "color",
+          "id": "review_text_color",
+          "label": "Review Text Color (Solid)",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_text_gradient",
+          "label": "Use Gradient for Review Text",
+          "default": false
+        },
+        {
+          "type": "color_background",
+          "id": "text_gradient",
+          "label": "Review Text Gradient",
+          "default": "linear-gradient(to right, #CCCCCC, #FFFFFF)"
+        },
+        {
+          "type": "range",
+          "id": "review_text_size_desktop",
+          "label": "Review Text Size (Desktop)",
+          "default": 16,
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "review_text_size_mobile",
+          "label": "Review Text Size (Mobile)",
+          "default": 14,
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "John Smith",
+            "reviewer_title": "Motion Graphics Designer",
+            "review_text": "This course completely transformed my After Effects skills! What once was hard to follow, and required advanced technical approach, I can now create professional motion graphics and animations for my clients."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Emily Johnson",
+            "reviewer_title": "Freelance Animator",
+            "review_text": "I had basic knowledge of After Effects, but this course didn't take it to the next level. The techniques I learned are now part of my daily workflow, and the course made complex concepts simple."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Olivia Brown",
+            "reviewer_title": "Creative Director",
+            "review_text": "This is by far the best After Effects course I've ever taken. The lessons are detailed, practical and up-to-date with the latest trends in motion design. I can confidently create stunning animations now."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.custom-reviews {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background-color: {{ section.settings.background_color }};
+  color: #fff;
+}
+
+.custom-reviews__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.custom-reviews__heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.custom-reviews__heading-text {
+  font-size: {{ section.settings.heading_size_desktop }}px;
+  font-weight: 600;
+  color: {{ section.settings.heading_color }};
+  margin: 0;
+  line-height: 1.2;
+}
+
+.custom-reviews__heading-colored {
+  color: {{ section.settings.colored_word_color }};
+}
+
+.custom-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.settings.max_reviews_per_row }}, 1fr);
+  gap: 30px;
+}
+
+.custom-reviews__grid.is-slider {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-reviews__slider {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+  gap: 30px;
+}
+
+.custom-reviews__slide {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+
+/* Adjust slide width based on screen size */
+@media screen and (min-width: 992px) {
+  .custom-reviews__slide {
+    width: calc(100% / {{ section.settings.max_reviews_per_row }});
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 991px) {
+  .custom-reviews__slide {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-reviews__slide {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.slider-arrow {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: {{ section.settings.heading_color }};
+  font-size: 22px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.slider-arrow:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slider-prev {
+  margin-right: 10px;
+}
+
+.slider-next {
+  margin-left: 10px;
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 20px;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: {{ section.settings.heading_color }};
+  opacity: 0.3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+  opacity: 1;
+  background-color: {{ section.settings.colored_word_color }};
+}
+
+.review-card {
+  {% if section.settings.use_gradient_background %}
+    background: {{ section.settings.review_gradient_background }};
+  {% else %}
+    background-color: {{ section.settings.review_background }};
+  {% endif %}
+  padding: {{ section.settings.review_padding }}px;
+  border-radius: {{ section.settings.review_border_radius }}px;
+  position: relative;
+}
+
+.review-card__quote-icon {
+  position: absolute;
+  top: {{ section.settings.review_padding }}px;
+  left: {{ section.settings.review_padding }}px;
+  font-size: {{ section.settings.quote_size }}px;
+  color: {{ section.settings.quote_color }};
+  opacity: 0.4;
+  line-height: 1;
+}
+
+.review-card__content {
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.review-card__text {
+  margin: 0;
+  line-height: 1.6;
+  font-size: {{ section.settings.review_text_size_desktop }}px;
+}
+
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.reviewer__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.reviewer__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+.reviewer__image-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.reviewer__details {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer__name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.reviewer__title {
+  margin: 0;
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 991px) {
+  .custom-reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-reviews__heading-text {
+    font-size: {{ section.settings.heading_size_mobile }}px;
+  }
+  
+  .custom-reviews__grid:not(.is-slider) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .custom-reviews__slide {
+    flex: 0 0 calc(100% - 20px);
+  }
+  
+  .slider-controls {
+    margin-top: 20px;
+  }
+  
+  .slider-dots {
+    gap: 6px;
+  }
+  
+  .slider-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+</style>
+
+<div class="custom-reviews" id="shopify-section-{{ section.id }}">
+  <div class="custom-reviews__container">
+    <div class="custom-reviews__heading">
+      <h2 class="custom-reviews__heading-text">
+        {% assign heading_parts = section.settings.main_heading | split: section.settings.colored_word %}
+        {{ heading_parts[0] }}<span class="custom-reviews__heading-colored">{{ section.settings.colored_word }}</span>{{ heading_parts[1] }}
+      </h2>
+    </div>
+    
+    {% assign use_slider = false %}
+    {% if section.settings.slider_mode == 'always' or section.settings.slider_mode == 'auto' and section.blocks.size > 4 %}
+      {% assign use_slider = true %}
+    {% endif %}
+    
+    <div class="custom-reviews__grid{% if use_slider %} is-slider{% endif %}" id="reviewsContainer">
+      {% if use_slider %}
+        <div class="custom-reviews__slider" id="reviewsSlider">
+      {% endif %}
+      
+      {% for block in section.blocks %}
+        {% if block.type == "review" %}
+          <div class="review-card{% if use_slider %} custom-reviews__slide{% endif %}" {{ block.shopify_attributes }} data-block-id="{{ block.id }}">
+            <div class="review-card__quote-icon">&ldquo;</div>
+            
+            <div class="review-card__content">
+              <p class="review-card__text" style="
+                {% if block.settings.use_text_gradient %}
+                  background: {{ block.settings.text_gradient }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.review_text_color }};
+                {% endif %}
+                font-size: {{ block.settings.review_text_size_desktop }}px;">
+                {{ block.settings.review_text }}
+              </p>
+            </div>
+            
+            <div class="reviewer">
+              {% if block.settings.reviewer_image %}
+                <div class="reviewer__image">
+                  {% if block.settings.use_image_background %}
+                    <div class="reviewer__image-bg" style="
+                      background: {{ block.settings.image_background }};
+                      opacity: {{ block.settings.image_bg_opacity | divided_by: 100.0 }};">
+                    </div>
+                  {% endif %}
+                  <img src="{{ block.settings.reviewer_image | img_url: '100x100', crop: 'center' }}" alt="{{ block.settings.reviewer_name }}">
+                </div>
+              {% endif %}
+              
+              <div class="reviewer__details">
+                <h3 class="reviewer__name" style="
+                  {% if block.settings.use_name_gradient %}
+                    background: {{ block.settings.name_gradient }};
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  {% else %}
+                    color: {{ block.settings.name_color }};
+                  {% endif %}
+                  font-size: {{ block.settings.name_size_desktop }}px;">
+                  {{ block.settings.reviewer_name }}
+                </h3>
+                <p class="reviewer__title" style="
+                  {% if block.settings.use_title_gradient %}
+                    background: {{ block.settings.title_gradient }};
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  {% else %}
+                    color: {{ block.settings.title_color }};
+                  {% endif %}
+                  font-size: {{ block.settings.title_size_desktop }}px;">
+                  {{ block.settings.reviewer_title }}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% if use_slider %}
+        </div>
+      {% endif %}
+    </div>
+    
+    {% if use_slider and section.settings.enable_slider %}
+      <div class="slider-controls">
+        <button class="slider-arrow slider-prev" aria-label="Previous slide">&larr;</button>
+        {% if section.settings.show_dots %}
+          <div class="slider-dots" id="sliderDots">
+            {% for i in (1..section.blocks.size) %}
+              <span class="slider-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <button class="slider-arrow slider-next" aria-label="Next slide">&rarr;</button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% style %}
+@media screen and (max-width: 768px) {
+  {% for block in section.blocks %}
+    {% if block.type == "review" %}
+      #shopify-section-{{ section.id }} .review-card[data-block-id="{{ block.id }}"] .reviewer__name {
+        font-size: {{ block.settings.name_size_mobile }}px !important;
+      }
+      
+      #shopify-section-{{ section.id }} .review-card[data-block-id="{{ block.id }}"] .reviewer__title {
+        font-size: {{ block.settings.title_size_mobile }}px !important;
+      }
+      
+      #shopify-section-{{ section.id }} .review-card[data-block-id="{{ block.id }}"] .review-card__text {
+        font-size: {{ block.settings.review_text_size_mobile }}px !important;
+      }
+    {% endif %}
+  {% endfor %}
+}
+
+/* Additional gradient-specific CSS properties for better browser compatibility */
+.gradient-text {
+  display: inline-block;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+{% endstyle %}
+
+{% if section.settings.slider_mode == 'always' or section.settings.slider_mode == 'auto' and section.blocks.size > 4 %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.getElementById('reviewsSlider');
+  const slidesContainer = document.querySelector('.custom-reviews__grid');
+  const slides = document.querySelectorAll('.custom-reviews__item');
+  const dots = document.querySelectorAll('.slider-dot');
+  const prevBtn = document.querySelector('.slider-prev');
+  const nextBtn = document.querySelector('.slider-next');
+  let currentSlide = 0;
+  const slideCount = {{ section.blocks.size }};
+  let visibleSlides = 1;
+  
+  // Set initial visibleSlides based on screen width
+  if (window.innerWidth > 991) {
+    visibleSlides = {{ section.settings.max_reviews_per_row }};
+  } else if (window.innerWidth > 768) {
+    visibleSlides = 2;
+  }
+  
+  let maxSlide = Math.max(0, slideCount - visibleSlides);
+  let autoplayInterval;
+  
+  // Set up slider styles
+  function setupSliderStyles() {
+    if (slidesContainer) {
+      slidesContainer.style.display = 'flex';
+      slidesContainer.style.flexWrap = 'nowrap';
+      slidesContainer.style.transition = 'transform 0.4s ease';
+      slidesContainer.style.width = '100%';
+    }
+    
+    if (slides) {
+      slides.forEach(slide => {
+        slide.style.flex = '0 0 auto';
+        if (window.innerWidth > 991) {
+          slide.style.width = `${100 / visibleSlides}%`;
+        } else if (window.innerWidth > 768) {
+          slide.style.width = '50%';
+        } else {
+          slide.style.width = '100%';
+        }
+      });
+    }
+  }
+  
+  // Initial setup
+  setupSliderStyles();
+  updateSliderPosition();
+  
+  // Set up event listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      prevSlide();
+      stopAutoplay();
+      startAutoplay();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      nextSlide();
+      stopAutoplay();
+      startAutoplay();
+    });
+  }
+  
+  // Set up dots if they exist
+  if (dots) {
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        stopAutoplay();
+        startAutoplay();
+      });
+    });
+  }
+  
+  // Set up autoplay if enabled
+  {% if section.settings.auto_slide %}
+  startAutoplay();
+  
+  // Pause autoplay on hover
+  const sliderContainer = document.getElementById('reviewsContainer');
+  if (sliderContainer) {
+    sliderContainer.addEventListener('mouseenter', stopAutoplay);
+    sliderContainer.addEventListener('mouseleave', startAutoplay);
+  }
+  {% endif %}
+  
+  // Add touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  if (slidesContainer) {
+    slidesContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoplay();
+    }, {passive: true});
+    
+    slidesContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+      startAutoplay();
+    }, {passive: true});
+  }
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold && currentSlide < maxSlide) {
+      // Swipe left
+      nextSlide();
+    } else if (touchEndX > touchStartX + swipeThreshold && currentSlide > 0) {
+      // Swipe right
+      prevSlide();
+    }
+  }
+  
+  // Handle window resize
+  window.addEventListener('resize', handleResize);
+  
+  function updateSliderPosition() {
+    if (!slidesContainer) return;
+    
+    // Calculate the percentage to translate based on visible slides
+    const translateValue = -currentSlide * (100 / visibleSlides);
+    slidesContainer.style.transform = `translateX(${translateValue}%)`;
+    
+    // Update active dot
+    if (dots) {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+    
+    // Update button states
+    if (prevBtn) {
+      prevBtn.disabled = currentSlide === 0;
+      prevBtn.style.opacity = currentSlide === 0 ? "0.5" : "1";
+    }
+    
+    if (nextBtn) {
+      nextBtn.disabled = currentSlide >= maxSlide;
+      nextBtn.style.opacity = currentSlide >= maxSlide ? "0.5" : "1";
+    }
+  }
+  
+  function nextSlide() {
+    if (currentSlide < maxSlide) {
+      currentSlide++;
+    } else {
+      currentSlide = 0; // Loop back to beginning
+    }
+    updateSliderPosition();
+  }
+  
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+    } else {
+      currentSlide = maxSlide; // Loop to end
+    }
+    updateSliderPosition();
+  }
+  
+  function goToSlide(slideIndex) {
+    currentSlide = Math.max(0, Math.min(slideIndex, maxSlide));
+    updateSliderPosition();
+  }
+  
+  function startAutoplay() {
+    {% if section.settings.auto_slide %}
+    stopAutoplay();
+    autoplayInterval = setInterval(nextSlide, {{ section.settings.slider_speed }});
+    {% endif %}
+  }
+  
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+  
+  function handleResize() {
+    // Recalculate visible slides on window resize
+    let newVisibleSlides = 1;
+    
+    if (window.innerWidth > 991) {
+      newVisibleSlides = {{ section.settings.max_reviews_per_row }};
+    } else if (window.innerWidth > 768) {
+      newVisibleSlides = 2;
+    }
+    
+    // Update slide widths
+    if (slides) {
+      slides.forEach(slide => {
+        if (window.innerWidth > 991) {
+          slide.style.width = `${100 / newVisibleSlides}%`;
+        } else if (window.innerWidth > 768) {
+          slide.style.width = '50%';
+        } else {
+          slide.style.width = '100%';
+        }
+      });
+    }
+    
+    if (newVisibleSlides !== visibleSlides) {
+      visibleSlides = newVisibleSlides;
+      maxSlide = Math.max(0, slideCount - visibleSlides); // Update maxSlide
+      currentSlide = Math.min(currentSlide, maxSlide);
+      updateSliderPosition();
+    }
+  }
+});
+</script>
+{% endif %}
