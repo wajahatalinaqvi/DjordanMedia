@@ -156,6 +156,32 @@
       "id": "button_text_gradient_to",
       "label": "Button Text Gradient To",
       "default": "#CCCCCC"
+    },
+    {
+      "type": "header",
+      "content": "Features Box Settings"
+    },
+    {
+      "type": "color",
+      "id": "features_bg_from",
+      "label": "Features Box Background From",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "features_bg_to",
+      "label": "Features Box Background To",
+      "default": "#2A2A2A"
+    },
+    {
+      "type": "range",
+      "id": "features_bg_opacity",
+      "label": "Features Box Background Opacity",
+      "default": 90,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%"
     }
   ],
   "blocks": [
@@ -163,6 +189,11 @@
       "type": "feature",
       "name": "Feature Item",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom Icon"
+        },
         {
           "type": "text",
           "id": "text",
@@ -315,7 +346,9 @@
   position: relative;
   padding: 40px;
   border-radius: 8px;
-  background: linear-gradient(to right, rgba(26,26,26,0.9), rgba(42,42,42,0.9));
+  background: linear-gradient(to right, 
+    {{ section.settings.features_bg_from | color_modify: 'alpha', section.settings.features_bg_opacity | divided_by: 100.0 }}, 
+    {{ section.settings.features_bg_to | color_modify: 'alpha', section.settings.features_bg_opacity | divided_by: 100.0 }});
   z-index: 1;
 }
 
@@ -363,6 +396,21 @@
   height: 20px;
   min-width: 20px;
   fill: #4A90E2;
+}
+
+.feature-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .button-container {
@@ -469,9 +517,15 @@
           {% for block in section.blocks limit: 4 %}
             {% if block.type == "feature" %}
               <div class="feature-item" style="--feature-font-size: {{ block.settings.font_size_desktop }}px; --feature-font-size-mobile: {{ block.settings.font_size_mobile }}px;">
-                <svg class="check-icon" viewBox="0 0 24 24">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-                </svg>
+                {% if block.settings.icon %}
+                  <div class="feature-icon">
+                    <img src="{{ block.settings.icon | img_url: 'small' }}" alt="{{ block.settings.text }}" loading="lazy">
+                  </div>
+                {% else %}
+                  <svg class="check-icon" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                  </svg>
+                {% endif %}
                 <span style="background: linear-gradient(to right, {{ block.settings.text_gradient_from }}, {{ block.settings.text_gradient_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.text }}</span>
               </div>
             {% endif %}
@@ -481,10 +535,16 @@
           {% for block in section.blocks offset:4 %}
             {% if block.type == "feature" %}
               <div class="feature-item" style="--feature-font-size: {{ block.settings.font_size_desktop }}px; --feature-font-size-mobile: {{ block.settings.font_size_mobile }}px;">
-                <svg class="check-icon" viewBox="0 0 24 24">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-                </svg>
-                <span style="color: {{ block.settings.text_color }}">{{ block.settings.text }}</span>
+                {% if block.settings.icon %}
+                  <div class="feature-icon">
+                    <img src="{{ block.settings.icon | img_url: 'small' }}" alt="{{ block.settings.text }}" loading="lazy">
+                  </div>
+                {% else %}
+                  <svg class="check-icon" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                  </svg>
+                {% endif %}
+                <span style="background: linear-gradient(to right, {{ block.settings.text_gradient_from }}, {{ block.settings.text_gradient_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.text }}</span>
               </div>
             {% endif %}
           {% endfor %}
