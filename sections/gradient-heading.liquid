@@ -1,0 +1,229 @@
+{% schema %}
+{
+  "name": "Two-Part Heading",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Heading Settings"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "What You'll Get"
+    },
+    {
+      "type": "color",
+      "id": "main_heading_color",
+      "label": "Main Heading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "main_heading_size_desktop",
+      "label": "Main Heading Size (Desktop)",
+      "default": 48,
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "main_heading_size_mobile",
+      "label": "Main Heading Size (Mobile)",
+      "default": 36,
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Subheading Settings"
+    },
+    {
+      "type": "text",
+      "id": "subheading_prefix",
+      "label": "Subheading Prefix",
+      "default": "inside the"
+    },
+    {
+      "type": "text",
+      "id": "subheading_gradient_text",
+      "label": "Subheading Gradient Text",
+      "default": "Course!"
+    },
+    {
+      "type": "text",
+      "id": "subheading_suffix",
+      "label": "Subheading Suffix (Optional)",
+      "default": ""
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "gradient_from",
+      "label": "Gradient Text Start Color",
+      "default": "#D9D3B9"
+    },
+    {
+      "type": "color",
+      "id": "gradient_to",
+      "label": "Gradient Text End Color",
+      "default": "#A39E8B"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "label": "Subheading Size (Desktop)",
+      "default": 48,
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "label": "Subheading Size (Mobile)",
+      "default": 36,
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two-Part Heading",
+      "settings": {
+        "main_heading": "What You'll Get",
+        "subheading_prefix": "inside the",
+        "subheading_gradient_text": "Course!"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.gradient-heading-section {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background-color: {{ section.settings.background_color }};
+}
+
+.gradient-heading-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: {{ section.settings.text_align }};
+}
+
+.heading-wrapper {
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.main-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: {{ section.settings.main_heading_size_desktop }}px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.1;
+  color: {{ section.settings.main_heading_color }};
+  display: block;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.subheading {
+  font-family: 'Poppins', sans-serif;
+  font-size: {{ section.settings.subheading_size_desktop }}px;
+  font-weight: 400;
+  margin: 0;
+  display: block;
+  color: {{ section.settings.subheading_color }};
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+}
+
+.gradient-word {
+  background: linear-gradient(to right, {{ section.settings.gradient_from }}, {{ section.settings.gradient_to }});
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+  display: inline;
+}
+
+@media screen and (max-width: 768px) {
+  .main-heading {
+    font-size: {{ section.settings.main_heading_size_mobile }}px;
+  }
+  
+  .subheading {
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+  }
+}
+</style>
+
+<div class="gradient-heading-section">
+  <div class="gradient-heading-container">
+    <div class="heading-wrapper">
+      <h2 class="main-heading">{{ section.settings.main_heading }}</h2>
+      <h2 class="subheading">
+        {{ section.settings.subheading_prefix }} 
+        <span class="gradient-word">{{ section.settings.subheading_gradient_text }}</span>
+        {{ section.settings.subheading_suffix }}
+      </h2>
+    </div>
+  </div>
+</div>
