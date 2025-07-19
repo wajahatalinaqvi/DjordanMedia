@@ -1,0 +1,524 @@
+{% schema %}
+{
+  "name": "Text with Boxes",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Heading Settings"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "Join a Global Community and Master Timeless Skills!"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_from",
+      "label": "Heading Gradient From",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_to",
+      "label": "Heading Gradient To",
+      "default": "#9B9B9B"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading Size (Desktop)",
+      "default": 48,
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Size (Mobile)",
+      "default": 32,
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Box",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Box Style"
+        },
+        {
+          "type": "color",
+          "id": "box_bg_from",
+          "label": "Box Background Gradient From",
+          "default": "#1A1A1A"
+        },
+        {
+          "type": "color",
+          "id": "box_bg_to",
+          "label": "Box Background Gradient To",
+          "default": "#2A2A2A"
+        },
+        {
+          "type": "range",
+          "id": "box_bg_opacity",
+          "label": "Box Background Opacity",
+          "default": 90,
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%"
+        },
+        {
+          "type": "color",
+          "id": "box_border_from",
+          "label": "Box Border Gradient From",
+          "default": "#4A90E2"
+        },
+        {
+          "type": "color",
+          "id": "box_border_to",
+          "label": "Box Border Gradient To",
+          "default": "#9B9B9B"
+        },
+        {
+          "type": "header",
+          "content": "Icon Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_from",
+          "label": "Icon Background Gradient From",
+          "default": "#4A90E2"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_to",
+          "label": "Icon Background Gradient To",
+          "default": "#9B9B9B"
+        },
+        {
+          "type": "range",
+          "id": "icon_bg_opacity",
+          "label": "Icon Background Opacity",
+          "default": 90,
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Text Settings"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Box Heading",
+          "default": "Creators You Love!"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Box Subheading",
+          "default": "Over 800 Creator Joined World Wide"
+        },
+        {
+          "type": "color",
+          "id": "heading_color_from",
+          "label": "Heading Gradient From",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "heading_color_to",
+          "label": "Heading Gradient To",
+          "default": "#9B9B9B"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color_from",
+          "label": "Subheading Gradient From",
+          "default": "#9B9B9B"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color_to",
+          "label": "Subheading Gradient To",
+          "default": "#4A90E2"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_desktop",
+          "label": "Heading Size (Desktop)",
+          "default": 24,
+          "min": 16,
+          "max": 40,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Heading Size (Mobile)",
+          "default": 20,
+          "min": 14,
+          "max": 32,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_desktop",
+          "label": "Subheading Size (Desktop)",
+          "default": 16,
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_mobile",
+          "label": "Subheading Size (Mobile)",
+          "default": 14,
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text with Boxes",
+      "blocks": [
+        {
+          "type": "box",
+          "settings": {
+            "heading": "Creators You Love!",
+            "subheading": "Over 800 Creator Joined World Wide"
+          }
+        },
+        {
+          "type": "box",
+          "settings": {
+            "heading": "Build Your Success!",
+            "subheading": "Build your network, and get support"
+          }
+        },
+        {
+          "type": "box",
+          "settings": {
+            "heading": "Skills That Last Forever",
+            "subheading": "This is not a one time skill, This is for life"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.text-boxes-section {
+  padding: 60px 0;
+  background: #000000;
+}
+
+.text-boxes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.main-heading {
+  text-align: center;
+  margin-bottom: 50px;
+  background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: {{ section.settings.heading_size_desktop }}px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.boxes-slider-container {
+  position: relative;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.boxes-grid.slider {
+  display: flex;
+  transition: transform 0.3s ease;
+  gap: 30px;
+  width: 100%;
+}
+
+.boxes-grid.slider .box {
+  min-width: calc((100% - 60px) / 3);
+  flex: 0 0 calc((100% - 60px) / 3);
+  transition: opacity 0.3s ease;
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.slider-arrow:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.prev-arrow {
+  left: -20px;
+}
+
+.next-arrow {
+  right: -20px;
+}
+
+.box {
+  position: relative;
+  padding: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.box::before,
+.box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+}
+
+.box::before {
+  z-index: -2;
+  padding: 2px;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, var(--border-gradient-from), var(--border-gradient-to));
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.box::after {
+  z-index: -1;
+  background: linear-gradient(to bottom, var(--bg-gradient-from), var(--bg-gradient-to));
+  opacity: var(--bg-opacity);
+}
+
+.icon-container {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.icon-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 15px;
+}
+
+.box-heading {
+  margin: 0 0 10px;
+  font-size: {{ block.settings.heading_size_desktop }}px;
+  font-weight: 600;
+}
+
+.box-subheading {
+  margin: 0;
+  font-size: {{ block.settings.subheading_size_desktop }}px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+  .main-heading {
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    margin-bottom: 30px;
+  }
+
+  .boxes-grid:not(.slider) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .boxes-grid.slider .box {
+    min-width: calc(100% - 40px);
+    flex: 0 0 calc(100% - 40px);
+  }
+
+  .box-heading {
+    font-size: {{ block.settings.heading_size_mobile }}px;
+  }
+
+  .box-subheading {
+    font-size: {{ block.settings.subheading_size_mobile }}px;
+  }
+
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .prev-arrow {
+    left: -10px;
+  }
+
+  .next-arrow {
+    right: -10px;
+  }
+}
+</style>
+
+<div class="text-boxes-section">
+  <div class="text-boxes-container">
+    <h2 class="main-heading">{{ section.settings.main_heading }}</h2>
+    
+    <div class="boxes-slider-container">
+      <div class="boxes-grid{% if section.blocks.size > 3 %} slider{% endif %}">
+        {% for block in section.blocks %}
+          {% if block.type == 'box' %}
+            <div class="box" {{ block.shopify_attributes }} 
+              style="
+                --bg-gradient-from: {{ block.settings.box_bg_from }};
+                --bg-gradient-to: {{ block.settings.box_bg_to }};
+                --bg-opacity: {{ block.settings.box_bg_opacity | divided_by: 100.0 }};
+                --border-gradient-from: {{ block.settings.box_border_from }};
+                --border-gradient-to: {{ block.settings.box_border_to }};
+              ">
+              <div class="icon-container" style="background: linear-gradient(45deg, 
+                {{ block.settings.icon_bg_from | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }}, 
+                {{ block.settings.icon_bg_to | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }});">
+                {% if block.settings.icon %}
+                  <img src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.heading }}">
+                {% endif %}
+              </div>
+              <h3 class="box-heading" style="background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.heading }}</h3>
+              <p class="box-subheading" style="background: linear-gradient(to right, {{ block.settings.subheading_color_from }}, {{ block.settings.subheading_color_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.subheading }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if section.blocks.size > 3 %}
+        <button type="button" class="slider-arrow prev-arrow" aria-label="Previous slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" class="slider-arrow next-arrow" aria-label="Next slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.slider');
+  if (!slider) return;
+
+  const boxes = slider.querySelectorAll('.box');
+  const prevBtn = document.querySelector('.prev-arrow');
+  const nextBtn = document.querySelector('.next-arrow');
+  const boxWidth = boxes[0].offsetWidth;
+  const gap = 30; // matches the gap in CSS
+  let currentIndex = 0;
+
+  function updateSlider() {
+    const offset = -(currentIndex * (boxWidth + gap));
+    slider.style.transform = `translateX(${offset}px)`;
+    
+    // Update arrow visibility
+    prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+    prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+    
+    nextBtn.style.opacity = currentIndex >= boxes.length - 3 ? '0.5' : '1';
+    nextBtn.style.pointerEvents = currentIndex >= boxes.length - 3 ? 'none' : 'auto';
+
+    // Update box visibility
+    boxes.forEach((box, index) => {
+      if (index >= currentIndex && index < currentIndex + 3) {
+        box.style.opacity = '1';
+      } else {
+        box.style.opacity = '0.3';
+      }
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlider();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < boxes.length - 3) {
+      currentIndex++;
+      updateSlider();
+    }
+  });
+
+  // Handle window resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      currentIndex = 0; // Reset to first slide
+      updateSlider();
+    }, 250);
+  });
+
+  // Initialize slider
+  updateSlider();
+});
+</script>
