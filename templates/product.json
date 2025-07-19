@@ -1,16 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "text-and-image": {
       "type": "text-and-image",
       "disabled": true,
       "settings": {
-        "image": "shopify:\/\/shop_images\/4.png",
+        "image": "shopify://shop_images/4.png",
         "image_mask": "none",
-        "image2": "shopify:\/\/shop_images\/5.png",
+        "image2": "shopify://shop_images/5.png",
         "image2_mask": "none",
         "subtitle": "Essentials",
         "title": "Unlock a New Dimension in Editing",
-        "text": "<p>Open the door to a new realm of editing possibilities. Explore the magic of speed ramping and color mastery with ease.<\/p>",
+        "text": "<p>Open the door to a new realm of editing possibilities. Explore the magic of speed ramping and color mastery with ease.</p>",
         "button_label": "",
         "button_link": "",
         "button_style": "primary",
@@ -27,12 +36,12 @@
       "type": "text-and-image",
       "disabled": true,
       "settings": {
-        "image": "shopify:\/\/shop_images\/adjustable.png",
+        "image": "shopify://shop_images/adjustable.png",
         "image_mask": "none",
         "image2_mask": "none",
         "subtitle": "",
         "title": "Precision Redefined",
-        "text": "<p>Discover a new era in creativity as we redefine precision with automated tools. Achieve perfection effortlessly and unlock the full potential of your craft like never before.<\/p>",
+        "text": "<p>Discover a new era in creativity as we redefine precision with automated tools. Achieve perfection effortlessly and unlock the full potential of your craft like never before.</p>",
         "button_label": "",
         "button_link": "",
         "button_style": "primary",
@@ -49,13 +58,13 @@
       "type": "text-and-image",
       "disabled": true,
       "settings": {
-        "image": "shopify:\/\/shop_images\/speed.png",
+        "image": "shopify://shop_images/speed.png",
         "image_mask": "none",
-        "image2": "shopify:\/\/shop_images\/3.png",
+        "image2": "shopify://shop_images/3.png",
         "image2_mask": "none",
         "subtitle": "No Excuses",
         "title": "Project Completion Made Effortless",
-        "text": "<p>Say goodbye to project delays and excuses. Our powerful extension ensures you finish your projects with ease, meeting deadlines effortlessly. It's time to take control of your creative journey and deliver your best work, every time.<\/p>",
+        "text": "<p>Say goodbye to project delays and excuses. Our powerful extension ensures you finish your projects with ease, meeting deadlines effortlessly. It's time to take control of your creative journey and deliver your best work, every time.</p>",
         "button_label": "",
         "button_link": "",
         "button_style": "primary",
@@ -76,7 +85,7 @@
           "settings": {
             "heading": "Countdown",
             "heading_size": "h2",
-            "text": "<p>Use this timer to create urgency and boost sales.<\/p>",
+            "text": "<p>Use this timer to create urgency and boost sales.</p>",
             "content_alignment": "left"
           }
         },
@@ -89,7 +98,7 @@
             "hour": "09",
             "minute": "00",
             "hide_timer": true,
-            "text": "<p>ESSENTIALFX IS NOW AVAILABLE!<\/p>"
+            "text": "<p>ESSENTIALFX IS NOW AVAILABLE!</p>"
           }
         },
         "template--16615112343807__139001b3-3a2d-40d5-b88e-12acb80e9b91-button-1": {
@@ -126,7 +135,7 @@
         "text": "",
         "button_label": "",
         "button_link": "",
-        "image": "shopify:\/\/shop_images\/adjustable.png",
+        "image": "shopify://shop_images/adjustable.png",
         "layout": "right",
         "height": 750,
         "framed": false,
@@ -139,7 +148,7 @@
       "type": "main-product",
       "blocks": {
         "judge_me_reviews_preview_badge_qYbXzC": {
-          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "disabled": true,
           "settings": {}
         },
@@ -196,7 +205,7 @@
           "disabled": true,
           "settings": {
             "title": "Shipping information",
-            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>",
             "page": ""
           }
         },
@@ -213,7 +222,7 @@
           "settings": {}
         },
         "judge_me_reviews_review_widget_wajyLA": {
-          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         }
       },
@@ -283,13 +292,13 @@
         "section_margin_bottom_mobile": 0,
         "heading": "Master After Effects and Start Creating Now!",
         "text_alignment": "center",
-        "heading_gradient_from": "#FFFFFF",
-        "heading_gradient_to": "#9B9B9B",
+        "heading_gradient_from": "#ffffff",
+        "heading_gradient_to": "#9b9b9b",
         "heading_font_size": 56,
         "heading_font_size_mobile": 40,
         "heading_text_transform": "none",
         "subheading": "Jump into the world of motion graphics with our After Effects course and turn your ideas into professional videos with ease",
-        "subheading_color": "#9B9B9B",
+        "subheading_color": "#9b9b9b",
         "subheading_font_size": 20,
         "subheading_font_size_mobile": 16,
         "subheading_text_transform": "none",
@@ -297,23 +306,23 @@
         "button1_link": "",
         "button1_font_size": 16,
         "button1_font_size_mobile": 14,
-        "button1_bg_from": "#1A1A1A",
-        "button1_bg_to": "#2A2A2A",
-        "button1_text_from": "#FFFFFF",
-        "button1_text_to": "#9B9B9B",
+        "button1_bg_from": "#1a1a1a",
+        "button1_bg_to": "#2a2a2a",
+        "button1_text_from": "#ffffff",
+        "button1_text_to": "#9b9b9b",
         "button1_border_from": "#333333",
-        "button1_border_to": "#4A4A4A",
+        "button1_border_to": "#4a4a4a",
         "button2_text": "All Plugin",
         "button2_link": "",
         "button2_font_size": 16,
         "button2_font_size_mobile": 14,
-        "button2_bg_from": "#1A1A1A",
-        "button2_bg_to": "#2A2A2A",
-        "button2_text_from": "#FFFFFF",
-        "button2_text_to": "#9B9B9B",
+        "button2_bg_from": "#1a1a1a",
+        "button2_bg_to": "#2a2a2a",
+        "button2_text_from": "#ffffff",
+        "button2_text_to": "#9b9b9b",
         "button2_border_from": "#333333",
-        "button2_border_to": "#4A4A4A",
-        "mobile_button_layout": "stack",
+        "button2_border_to": "#4a4a4a",
+        "mobile_button_layout": "inline",
         "mobile_button_alignment": "center"
       }
     }
