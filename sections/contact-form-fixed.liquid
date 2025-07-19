@@ -7,7 +7,7 @@
   }
   
   .contact-form-custom .section-header__title {
-    font-size: {{ section.settings.title_font_size_desktop | default: '48' }}px;
+    font-size: {{ section.settings.title_font_size_desktop | default: 48 }}px;
     font-weight: 300;
     text-align: center;
     margin-bottom: 10px;
@@ -20,7 +20,7 @@
   
   .contact-form-custom .section-header__rte {
     text-align: center;
-    font-size: {{ section.settings.subtitle_font_size_desktop | default: '16' }}px;
+    font-size: {{ section.settings.subtitle_font_size_desktop | default: 16 }}px;
     color: {{ section.settings.subtitle_color | default: '#cccccc' }};
     margin-bottom: 50px;
   }
@@ -123,11 +123,11 @@
     }
     
     .contact-form-custom .section-header__title {
-      font-size: {{ section.settings.title_font_size_mobile | default: '36' }}px;
+      font-size: {{ section.settings.title_font_size_mobile | default: 36 }}px;
     }
     
     .contact-form-custom .section-header__rte {
-      font-size: {{ section.settings.subtitle_font_size_mobile | default: '14' }}px;
+      font-size: {{ section.settings.subtitle_font_size_mobile | default: 14 }}px;
     }
     
     .contact-form-custom .grid {
@@ -209,12 +209,6 @@
           Submit
         </button>
 
-        {% comment %}
-          Remove the following three lines of code to remove the note
-          about being protected by Google's reCAPTCHA service.
-          By removing it, the small reCAPTCHA widget will appear in the
-          bottom right corner of the page.
-        {% endcomment %}
         {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
 
       {%- endform -%}
