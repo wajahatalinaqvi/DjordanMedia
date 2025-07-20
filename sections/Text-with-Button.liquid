@@ -88,6 +88,50 @@
     },
     {
       "type": "header",
+      "content": "Spacing Controls"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_gap",
+      "label": "Gap Below Heading",
+      "default": 20,
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_bottom_gap",
+      "label": "Gap Below Subheading", 
+      "default": 36,
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_gap_mobile",
+      "label": "Gap Below Heading (Mobile)",
+      "default": 16,
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_bottom_gap_mobile",
+      "label": "Gap Below Subheading (Mobile)",
+      "default": 26,
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "header",
       "content": "Heading Settings"
     },
     {
@@ -438,20 +482,26 @@
   min-height: 400px;
 }
 
-.heading-container {
+.text-button-section .heading-container,
+#text-button-heading-container-unique {
   margin-bottom: 5px;
   max-width: 900px;
 }
 
-.heading {
+.text-button-section .heading,
+#text-button-heading-unique {
   font-family: 'Poppins', sans-serif;
-  font-size: {{ section.settings.heading_font_size }}px;
+  font-size: {{ section.settings.heading_font_size }}px !important;
   font-weight: 200;
-  line-height: 1.1;
-  color: #FFFFFF;
-  margin-bottom: 25px;
+  line-height: 1.2;
+  background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
   text-transform: {{ section.settings.heading_text_transform }} !important;
   letter-spacing: -0.5px;
+  padding-bottom: 4px;
 }
 
 .gradient-text {
@@ -476,7 +526,7 @@
   font-size: {{ section.settings.subheading_font_size }}px;
   color: {{section.settings.subheading_color}};
   max-width: 720px;
-  margin: 0 auto 30px;
+  margin: 0 auto {{ section.settings.subheading_bottom_gap }}px !important;
   -webkit-text-fill-color: {{section.settings.subheading_color}} !important;
   line-height: 1.6;
   text-transform: {{ section.settings.subheading_text_transform }};
@@ -615,16 +665,22 @@
     min-height: 320px;
   }
 
-  .heading {
+  .text-button-section .heading,
+  #text-button-heading-unique {
     font-size: {{ section.settings.heading_font_size_mobile }}px !important;
-    line-height: 1.15;
-    margin-bottom: 15px;
+    line-height: 1.25;
+    margin-bottom: {{ section.settings.heading_bottom_gap_mobile }}px !important;
+    background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 3px;
   }
   
   .subheading > p {
     font-size: {{ section.settings.subheading_font_size_mobile }}px !important;
     line-height: 1.5;
-    margin-bottom: 30px;
+    margin-bottom: {{ section.settings.subheading_bottom_gap_mobile }}px !important;
     letter-spacing: 0.2px;
   }
   
@@ -675,9 +731,11 @@
 </style>
 
 <div class="text-button-section">
-  <div class="heading-container">
-    <h2 class="heading">Master <span class="gradient-text">After Effects</span> and Start Creating <span class="gradient-text left-to-right">Now!</span></h2>
-  </div>
+  {% if section.settings.heading != blank %}
+    <div class="heading-container" id="text-button-heading-container-unique">
+      <h2 class="heading" id="text-button-heading-unique">{{ section.settings.heading }}</h2>
+    </div>
+  {% endif %}
   
   <div class="subheading">
    <p>{{ section.settings.subheading }}</p> 
