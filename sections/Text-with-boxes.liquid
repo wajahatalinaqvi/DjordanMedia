@@ -141,6 +141,17 @@
           "label": "Icon Image"
         },
         {
+          "type": "range",
+          "id": "icon_width",
+          "label": "Icon Size",
+          "default": 60,
+          "min": 30,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "info": "Controls the width and height of the icon"
+        },
+        {
           "type": "color",
           "id": "icon_bg_from",
           "label": "Icon Background Gradient From",
@@ -325,6 +336,10 @@
     }
     .box[data-block-id="{{ block.id }}"] .box-subheading {
       font-size: {{ block.settings.subheading_size_desktop }}px;
+    }
+    .box[data-block-id="{{ block.id }}"] .icon-container {
+      width: {{ block.settings.icon_width | default: 60 }}px;
+      height: {{ block.settings.icon_width | default: 60 }}px;
     }
   {% endif %}
 {% endfor %}
@@ -653,7 +668,10 @@
                 {{ block.settings.icon_bg_from | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }}, 
                 {{ block.settings.icon_bg_to | color_modify: 'alpha', block.settings.icon_bg_opacity | divided_by: 100.0 }});">
                 {% if block.settings.icon %}
-                  <img src="{{ block.settings.icon | image_url: width: 60 }}" width="60" height="60" alt="{{ block.settings.heading }}">
+                  <img src="{{ block.settings.icon | image_url: width: block.settings.icon_width | default: 60 }}" 
+                       width="{{ block.settings.icon_width | default: 60 }}" 
+                       height="{{ block.settings.icon_width | default: 60 }}" 
+                       alt="{{ block.settings.heading }}">
                 {% endif %}
               </div>
               <h3 class="box-heading" style="
