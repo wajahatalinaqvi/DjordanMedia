@@ -1,168 +1,12 @@
-<style>
-  .contact-form-custom {
-    background-color: {{ section.settings.section_background_color | default: '#1a1a1a' }};
-    padding: 60px 40px;
-    color: #ffffff;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .contact-form-custom .section-header__title {
-    font-size: {{ section.settings.title_font_size_desktop | default: '48' }}px;
-    font-weight: 300;
-    text-align: center;
-    margin-bottom: 10px;
-    color: {{ section.settings.title_color | default: '#ffffff' }};
-  }
-  
-  .contact-form-custom .section-header__title .highlight {
-    color: {{ section.settings.highlight_color | default: '#4a90e2' }};
-  }
-  
-  .contact-form-custom .section-header__rte {
-    text-align: center;
-    font-size: {{ section.settings.subtitle_font_size_desktop | default: '16' }}px;
-    color: {{ section.settings.subtitle_color | default: '#cccccc' }};
-    margin-bottom: 50px;
-  }
-  
-  .contact-form-custom .form-vertical {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .contact-form-custom label {
-    display: block;
-    color: {{ section.settings.label_color | default: '#cccccc' }};
-    font-size: 14px;
-    margin-bottom: 8px;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-  
-  .contact-form-custom .input-full {
-    background-color: #2a2a2a;
-    border: 1px solid #444444;
-    border-radius: 4px;
-    color: #ffffff;
-    padding: 15px;
-    font-size: 16px;
-    width: 100%;
-    margin-bottom: 25px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .contact-form-custom .input-full:focus {
-    outline: none;
-    border-color: #4a90e2;
-    background-color: #333333;
-  }
-  
-  .contact-form-custom .input-full::placeholder {
-    color: #888888;
-  }
-  
-  .contact-form-custom textarea.input-full {
-    min-height: 120px;
-    resize: vertical;
-  }
-  
-  .contact-form-custom .grid {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 25px;
-  }
-  
-  .contact-form-custom .grid__item {
-    flex: 1;
-    margin-bottom: 0;
-  }
-  
-  .contact-form-custom .btn {
-    background-color: #333333;
-    border: 1px solid #555555;
-    color: #ffffff;
-    padding: 15px 30px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-    margin-top: 20px;
-  }
-  
-  .contact-form-custom .btn:hover {
-    background-color: #4a4a4a;
-    border-color: #666666;
-  }
-  
-  .contact-form-custom .note--success {
-    background-color: rgba(74, 144, 226, 0.1);
-    border-color: #4a90e2;
-    color: #4a90e2;
-    text-align: center;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 30px;
-  }
-  
-  .contact-form-custom .errors {
-    background-color: rgba(208, 46, 46, 0.1);
-    border-color: #d02e2e;
-    color: #ff6b6b;
-    text-align: center;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 30px;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .contact-form-custom {
-      padding: 40px 20px;
-    }
-    
-    .contact-form-custom .section-header__title {
-      font-size: {{ section.settings.title_font_size_mobile | default: '36' }}px;
-    }
-    
-    .contact-form-custom .section-header__rte {
-      font-size: {{ section.settings.subtitle_font_size_mobile | default: '14' }}px;
-    }
-    
-    .contact-form-custom .grid {
-      flex-direction: column;
-      gap: 0;
-    }
-    
-    .contact-form-custom .grid__item {
-      margin-bottom: 25px;
-    }
-  }
-</style>
-
-<div class="index-section contact-form-custom">
+<div class="index-section">
   <div class="page-width{% if section.settings.narrow_column %} page-width--narrow{% endif %}">
     {%- if section.settings.title != blank -%}
       <div class="section-header">
         <h2 class="section-header__title">
-          {% if section.settings.custom_title != blank %}
-            {% assign title_parts = section.settings.custom_title | split: section.settings.highlight_word %}
-            {% if title_parts.size > 1 %}
-              {{ title_parts[0] }}<span class="highlight">{{ section.settings.highlight_word }}</span>{{ title_parts[1] }}
-            {% else %}
-              {{ section.settings.custom_title }}
-            {% endif %}
-          {% else %}
-            Still have a <span class="highlight">question</span> ? We're All Ears!
-          {% endif %}
+          {{ section.settings.title }}
         </h2>
         {%- if section.settings.text != blank -%}
           <div class="rte section-header__rte">{{ section.settings.text }}</div>
-        {%- elsif section.settings.custom_subtitle != blank -%}
-          <div class="rte section-header__rte">{{ section.settings.custom_subtitle }}</div>
-        {%- else -%}
-          <div class="rte section-header__rte">If you're curious about something or need more details, we're just a message away</div>
         {%- endif -%}
       </div>
     {% endif %}
@@ -182,31 +26,26 @@
         <div class="grid grid--small">
           <div class="grid__item medium-up--one-half">
             <label for="ContactFormName-{{ section.id }}">{{ 'contact.form.name' | t }}</label>
-            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[name]" placeholder="John Smith" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
           </div>
 
           <div class="grid__item medium-up--one-half">
             <label for="ContactFormEmail-{{ section.id }}">{{ 'contact.form.email' | t }}</label>
-            <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-full" name="contact[email]" placeholder="Email Address" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
           </div>
         </div>
 
         {%- if section.settings.show_phone -%}
           <label for="ContactFormPhone-{{ section.id }}">{{ 'contact.form.phone' | t }}</label>
-          <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-full" name="contact[phone]" placeholder="Phone Number" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
-        {%- endif -%}
-
-        {%- if section.settings.show_order_number -%}
-          <label for="ContactFormOrderNumber-{{ section.id }}">Order Number ( Optional )</label>
-          <input type="text" id="ContactFormOrderNumber-{{ section.id }}" class="input-full" name="contact[order_number]" placeholder="Order Number ( Optional )">
+          <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-full" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
         {%- endif -%}
 
         <label for="ContactFormMessage-{{ section.id }}">{{ 'contact.form.message' | t }}</label>
-        <textarea rows="5" id="ContactFormMessage-{{ section.id }}" class="input-full" name="contact[body]" placeholder="Please briefly describe your question or concern">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        <textarea rows="5" id="ContactFormMessage-{{ section.id }}" class="input-full" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
 
         <label for="contact-form-submit-{{ section.id }}" class="hidden-label">{{ 'contact.form.send' | t }}</label>
         <button type="submit" id="contact-form-submit-{{ section.id }}" class="btn">
-          Submit
+          {{ 'contact.form.send' | t }}
         </button>
 
         {% comment %}
@@ -232,143 +71,20 @@
       "content": "t:sections.contact-form.settings.content"
     },
     {
-      "type": "header",
-      "content": "Section Settings"
-    },
-    {
-      "type": "color",
-      "id": "section_background_color",
-      "label": "Section Background Color",
-      "default": "#1a1a1a"
-    },
-    {
-      "type": "header",
-      "content": "Title & Subtitle Settings"
-    },
-    {
-      "type": "text",
-      "id": "custom_title",
-      "label": "Custom Title",
-      "default": "Still have a question ? We're All Ears!",
-      "info": "Leave blank to use the default title"
-    },
-    {
-      "type": "text",
-      "id": "highlight_word",
-      "label": "Word to Highlight",
-      "default": "question",
-      "info": "This word will be highlighted in the title"
-    },
-    {
-      "type": "textarea",
-      "id": "custom_subtitle",
-      "label": "Custom Subtitle",
-      "default": "If you're curious about something or need more details, we're just a message away",
-      "info": "Leave blank to use the default subtitle"
-    },
-    {
-      "type": "header",
-      "content": "Font Size Settings"
-    },
-    {
-      "type": "range",
-      "id": "title_font_size_desktop",
-      "min": 20,
-      "max": 80,
-      "step": 2,
-      "unit": "px",
-      "label": "Title Font Size (Desktop)",
-      "default": 48
-    },
-    {
-      "type": "range",
-      "id": "title_font_size_mobile",
-      "min": 18,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Title Font Size (Mobile)",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "subtitle_font_size_desktop",
-      "min": 12,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Subtitle Font Size (Desktop)",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "subtitle_font_size_mobile",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Subtitle Font Size (Mobile)",
-      "default": 14
-    },
-    {
-      "type": "header",
-      "content": "Color Settings"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "highlight_color",
-      "label": "Highlight Word Color",
-      "default": "#4a90e2"
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#cccccc"
-    },
-    {
-      "type": "color",
-      "id": "label_color",
-      "label": "Form Label Color",
-      "default": "#cccccc"
-    },
-    {
-      "type": "header",
-      "content": "Legacy Settings"
-    },
-    {
       "type": "text",
       "id": "title",
       "label": "t:sections.contact-form.settings.title.label",
-      "default": "Contact us",
-      "info": "This setting is deprecated. Use Custom Title above instead."
+      "default": "Contact us"
     },
     {
       "type": "richtext",
       "id": "text",
-      "label": "t:sections.contact-form.settings.text.label",
-      "info": "This setting is deprecated. Use Custom Subtitle above instead."
-    },
-    {
-      "type": "header",
-      "content": "Form Settings"
+      "label": "t:sections.contact-form.settings.text.label"
     },
     {
       "type": "checkbox",
       "id": "show_phone",
       "label": "t:sections.contact-form.settings.show_phone.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_order_number",
-      "label": "Show order number field",
-      "default": true
     },
     {
       "type": "checkbox",
@@ -383,7 +99,7 @@
     }
   ],
   "disabled_on": {
-    "groups": ["footer", "header", "aside"]
+    "groups": ["footer", "header", "custom.popups"]
   }
 }
 {% endschema %}
