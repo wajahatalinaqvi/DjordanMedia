@@ -72,7 +72,7 @@
     {
       "type": "select",
       "id": "text_alignment",
-      "label": "Text Alignment",
+      "label": "Text Alignment (Desktop)",
       "default": "left",
       "options": [
         {
@@ -92,6 +92,31 @@
           "label": "Justify"
         }
       ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "Text Alignment (Mobile)",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
+      ],
+      "info": "Set text alignment specifically for mobile devices"
     },
     {
       "type": "select",
@@ -141,7 +166,7 @@
     {
       "type": "select",
       "id": "button_alignment",
-      "label": "Button Alignment",
+      "label": "Button Alignment (Desktop)",
       "default": "center",
       "options": [
         {
@@ -157,6 +182,27 @@
           "label": "Right"
         }
       ]
+    },
+    {
+      "type": "select",
+      "id": "button_alignment_mobile",
+      "label": "Button Alignment (Mobile)",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "info": "Set button alignment specifically for mobile devices"
     },
     {
       "type": "color",
@@ -356,13 +402,15 @@
   text-align: {{ section.settings.text_alignment }} !important;
 }
 
-.guidance-heading {
+.guidance-section .guidance-heading,
+#guidance-heading-unique {
   margin-bottom: {{ section.settings.text_button_gap }}px !important;
   text-align: {{ section.settings.text_alignment }} !important;
   line-height: 1;
 }
 
-.main-heading {
+.guidance-section .main-heading,
+#guidance-main-heading-unique {
   font-family: 'Poppins', sans-serif;
   font-size: {{ section.settings.heading_size_desktop }}px !important;
   font-weight: 400;
@@ -481,7 +529,8 @@
   object-fit: contain;
 }
 
-.button-container {
+.guidance-section .button-container,
+#guidance-button-container-unique {
   text-align: {{ section.settings.button_alignment }} !important;
 }
 
@@ -580,14 +629,25 @@
     gap: 15px;
   }
   
-  .main-heading {
+  .guidance-section .main-heading,
+  #guidance-main-heading-unique {
     font-size: {{ section.settings.heading_size_mobile }}px !important;
-    text-align: {{ section.settings.text_alignment }} !important;
+    text-align: {{ section.settings.text_alignment_mobile | default: 'center' }} !important;
   }
   
-  .guidance-heading {
+  .guidance-section .guidance-heading,
+  #guidance-heading-unique {
     margin-bottom: {{ section.settings.text_button_gap }}px !important;
-    text-align: {{ section.settings.text_alignment }} !important;
+    text-align: {{ section.settings.text_alignment_mobile | default: 'center' }} !important;
+  }
+
+  .text-side {
+    text-align: {{ section.settings.text_alignment_mobile | default: 'center' }} !important;
+  }
+
+  .guidance-section .button-container,
+  #guidance-button-container-unique {
+    text-align: {{ section.settings.button_alignment_mobile | default: 'center' }} !important;
   }
 
   .feature-item span {
@@ -599,8 +659,8 @@
 <div class="guidance-section">
   <div class="guidance-container">
     <div class="text-side">
-      <div class="guidance-heading">
-        <h2 class="main-heading">
+      <div class="guidance-heading" id="guidance-heading-unique">
+        <h2 class="main-heading" id="guidance-main-heading-unique">
           {% render 'gradient-word-maker', 
             text: section.settings.heading_text,
             start_color: section.settings.subheading_gradient_from,
@@ -610,7 +670,7 @@
       </div>
 
       {% if section.settings.button_text != blank %}
-        <div class="button-container">
+        <div class="button-container" id="guidance-button-container-unique">
           <a href="{{ section.settings.button_url }}" class="guidance-button">
             <span>{{ section.settings.button_text }}</span>
           </a>
