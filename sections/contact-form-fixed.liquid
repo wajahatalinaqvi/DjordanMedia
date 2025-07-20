@@ -232,28 +232,33 @@
 
 <div class="index-section contact-form-custom">
   <div class="page-width{% if section.settings.narrow_column %} page-width--narrow{% endif %}">
-    {%- if section.settings.title != blank -%}
+    {% if section.settings.custom_title != blank %}
       <div class="section-header">
         <h2 class="section-header__title">
-          {% if section.settings.custom_title != blank %}
+          {% if section.settings.highlight_word != blank and section.settings.custom_title contains section.settings.highlight_word %}
             {% assign title_parts = section.settings.custom_title | split: section.settings.highlight_word %}
-            {% if title_parts.size > 1 %}
-              {{ title_parts[0] }}<span class="highlight">{{ section.settings.highlight_word }}</span>{{ title_parts[1] }}
-            {% else %}
-              {{ section.settings.custom_title }}
-            {% endif %}
+            {% for part in title_parts %}
+              {% unless forloop.last %}
+                {{ part }}<span class="highlight">{{ section.settings.highlight_word }}</span>
+              {% else %}
+                {{ part }}
+              {% endunless %}
+            {% endfor %}
           {% else %}
-            Still have a <span class="highlight">question</span> ? We're All Ears!
+            {{ section.settings.custom_title }}
           {% endif %}
         </h2>
-        {%- if section.settings.text != blank -%}
-          <div class="rte section-header__rte">{{ section.settings.text }}</div>
-        {%- elsif section.settings.custom_subtitle != blank -%}
-          <div class="rte section-header__rte">{{ section.settings.custom_subtitle }}</div>
-        {%- else -%}
-          <div class="rte section-header__rte">If you're curious about something or need more details, we're just a message away</div>
-        {%- endif -%}
       </div>
+    {% endif %}
+    
+    {% if section.settings.custom_subtitle != blank %}
+      {% unless section.settings.custom_title != blank %}
+        <div class="section-header">
+      {% endunless %}
+        <div class="rte section-header__rte">{{ section.settings.custom_subtitle }}</div>
+      {% unless section.settings.custom_title != blank %}
+        </div>
+      {% endunless %}
     {% endif %}
 
     <div class="form-vertical">
@@ -332,22 +337,19 @@
       "type": "text",
       "id": "custom_title",
       "label": "Custom Title",
-      "default": "Still have a question ? We're All Ears!",
-      "info": "Leave blank to use the default title"
+      "info": "Enter your title text here. Leave blank to hide the title completely."
     },
     {
       "type": "text",
       "id": "highlight_word",
       "label": "Word to Highlight",
-      "default": "question",
-      "info": "This word will be highlighted in the title"
+      "info": "Enter a word from your title that you want to highlight with a different color"
     },
     {
       "type": "textarea",
       "id": "custom_subtitle",
       "label": "Custom Subtitle",
-      "default": "If you're curious about something or need more details, we're just a message away",
-      "info": "Leave blank to use the default subtitle"
+      "info": "Enter your subtitle text here. Leave blank to hide the subtitle."
     },
     {
       "type": "header",
@@ -420,23 +422,6 @@
       "id": "label_color",
       "label": "Form Label Color",
       "default": "#cccccc"
-    },
-    {
-      "type": "header",
-      "content": "Legacy Settings"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "t:sections.contact-form.settings.title.label",
-      "default": "Contact us",
-      "info": "This setting is deprecated. Use Custom Title above instead."
-    },
-    {
-      "type": "richtext",
-      "id": "text",
-      "label": "t:sections.contact-form.settings.text.label",
-      "info": "This setting is deprecated. Use Custom Subtitle above instead."
     },
     {
       "type": "header",

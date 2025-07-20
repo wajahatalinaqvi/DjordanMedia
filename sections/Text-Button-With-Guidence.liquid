@@ -70,6 +70,60 @@
       "default": "#A39E8B"
     },
     {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_vertical_alignment",
+      "label": "Text Vertical Alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "text_button_gap",
+      "label": "Gap Between Text and Button",
+      "default": 30,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
       "type": "header",
       "content": "Button Settings"
     },
@@ -83,6 +137,26 @@
       "type": "url",
       "id": "button_url",
       "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button Alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
     },
     {
       "type": "color",
@@ -275,17 +349,16 @@
   padding: 0 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
+  align-items: {{ section.settings.text_vertical_alignment }};
 }
 
 .text-side {
-  text-align: left;
+  text-align: {{ section.settings.text_alignment }} !important;
 }
 
 .guidance-heading {
-  margin-bottom: 40px;
-  text-align: left;
+  margin-bottom: {{ section.settings.text_button_gap }}px;
+  text-align: {{ section.settings.text_alignment }} !important;
   line-height: 1;
 }
 
@@ -299,6 +372,7 @@
   display: block;
   text-transform: capitalize !important;
   letter-spacing: 0.5px;
+  text-align: {{ section.settings.text_alignment }} !important;
 }
 
 /* Gradient styling moved to snippet */
@@ -408,7 +482,7 @@
 }
 
 .button-container {
-  text-align: center;
+  text-align: {{ section.settings.button_alignment }} !important;
 }
 
 .guidance-button {
@@ -490,6 +564,7 @@
   .guidance-container {
     grid-template-columns: 1fr;
     gap: 40px;
+    align-items: {{ section.settings.text_vertical_alignment }};
   }
   
   .features-container {
@@ -507,10 +582,12 @@
   
   .main-heading {
     font-size: {{ section.settings.heading_size_mobile }}px;
+    text-align: {{ section.settings.text_alignment }} !important;
   }
   
   .guidance-heading {
-    margin-bottom: 30px;
+    margin-bottom: {{ section.settings.text_button_gap }}px;
+    text-align: {{ section.settings.text_alignment }} !important;
   }
 
   .feature-item span {
