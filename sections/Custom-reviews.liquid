@@ -138,6 +138,19 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "center_mode",
+      "label": "Enable Center Mode",
+      "default": true,
+      "info": "Centers the active slide for a showcase effect"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_slide",
+      "label": "Enable Auto Slide",
+      "default": true
+    },
+    {
       "type": "color",
       "id": "review_background",
       "label": "Review Box Background (Solid)",
@@ -180,9 +193,9 @@
       "id": "quote_size",
       "label": "Quote Icon Size",
       "default": 40,
-      "min": 20,
+      "min": 4,
       "max": 60,
-      "step": 5,
+      "step": 2,
       "unit": "px"
     },
     {
@@ -190,6 +203,44 @@
       "id": "quote_color",
       "label": "Quote Icon Color",
       "default": "#4A90E2"
+    },
+    {
+      "type": "image_picker",
+      "id": "quote_icon_image",
+      "label": "Custom Quote Icon (Optional)",
+      "info": "Upload a custom quote icon instead of using the default"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_gradient_border",
+      "label": "Enable Gradient Border for Cards",
+      "default": true
+    },
+    {
+      "type": "color_background",
+      "id": "card_border_gradient",
+      "label": "Card Border Gradient",
+      "default": "linear-gradient(135deg, #4A90E2, #50E3C2)"
+    },
+    {
+      "type": "range",
+      "id": "border_glow_intensity",
+      "label": "Border Glow Intensity",
+      "default": 80,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "border_glow_spread",
+      "label": "Border Glow Spread",
+      "default": 8,
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px"
     }
   ],
   "blocks": [
@@ -412,12 +463,22 @@
 .custom-reviews__container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px; /* Increase padding to account for quote icons */
+  overflow: hidden; /* Prevent horizontal scrollbar */
+}
+
+@media screen and (max-width: 768px) {
+  .custom-reviews__container {
+    padding: 0 15px; /* Reduce padding on mobile */
+  }
 }
 
 .custom-reviews__heading {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .custom-reviews__heading-text {
@@ -426,10 +487,14 @@
   color: {{ section.settings.heading_color }};
   margin: 0;
   line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
 .custom-reviews__heading-colored {
   color: {{ section.settings.colored_word_color }};
+  position: relative;
+  display: inline-block;
 }
 
 .custom-reviews__grid {
@@ -440,43 +505,61 @@
 
 .custom-reviews__grid.is-slider {
   display: block;
-  overflow: hidden;
   position: relative;
+  margin: 0;
+  width: 100%;
 }
 
 .custom-reviews__slider {
-  display: flex;
-  transition: transform 0.5s ease;
   width: 100%;
-  gap: 30px;
+  position: relative;
+}
+
+.custom-reviews__slider .slick-list {
+  overflow: hidden; /* Change to hidden to prevent cards from overflowing */
+  padding: 30px 0;
+  margin: 0 -10px; /* Compensate for slide margins */
+}
+
+.custom-reviews__slider .slick-track {
+  display: flex;
+  align-items: stretch;
+  margin-left: 0; /* Fix alignment issues */
+}
+
+/* Proper spacing for slides */
+.custom-reviews__slider .slick-slide {
+  padding: 10px;
+  box-sizing: border-box;
+  height: auto;
+  opacity: 1 !important; /* Ensure all slides are fully visible */
 }
 
 .custom-reviews__slide {
-  flex-shrink: 0;
-  width: 100%;
+  display: flex;
+  height: auto;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 0 10px; /* Add horizontal padding for slide spacing */
 }
 
-/* Adjust slide width based on screen size */
-@media screen and (min-width: 992px) {
-  .custom-reviews__slide {
-    width: calc(100% / {{ section.settings.max_reviews_per_row }});
-  }
+/* For non-slider mode, use grid layout */
+.custom-reviews__grid:not(.is-slider) .custom-reviews__slide {
+  flex: 0 0 auto;
+  width: calc((100% / {{ section.settings.max_reviews_per_row }}) - 20px);
+  box-sizing: border-box;
+  margin: 0 10px 20px;
 }
 
-@media screen and (min-width: 769px) and (max-width: 991px) {
-  .custom-reviews__slide {
-    width: 50%;
+@media screen and (max-width: 991px) {
+  .custom-reviews__grid:not(.is-slider) .custom-reviews__slide {
+    width: calc(50% - 20px);
   }
 }
 
 @media screen and (max-width: 768px) {
-  .custom-reviews__slide {
-    width: 100%;
-    padding: 0 10px;
+  .custom-reviews__grid:not(.is-slider) .custom-reviews__slide {
+    width: calc(100% - 20px);
   }
-}
 }
 
 .slider-controls {
@@ -484,6 +567,13 @@
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .slider-controls {
+    margin-top: 20px;
+  }
 }
 
 .slider-arrow {
@@ -500,6 +590,7 @@
   justify-content: center;
   opacity: 0.7;
   transition: all 0.3s ease;
+  z-index: 10;
 }
 
 .slider-arrow:hover {
@@ -520,60 +611,153 @@
   justify-content: center;
   gap: 8px;
   margin: 0 20px;
+  width: auto;
 }
 
-.slider-dot {
+/* Slick will add dots dynamically */
+.slider-dots li {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.slider-dots li button {
+  border: 0;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  padding: 0;
+  outline: none;
+  position: relative;
+}
+
+.slider-dots li button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: {{ section.settings.heading_color }};
   opacity: 0.3;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.slider-dot.active {
+.slider-dots li.slick-active button:before {
   opacity: 1;
   background-color: {{ section.settings.colored_word_color }};
 }
 
 .review-card {
-  {% if section.settings.use_gradient_background %}
-    background: {{ section.settings.review_gradient_background }};
-  {% else %}
-    background-color: {{ section.settings.review_background }};
-  {% endif %}
-  padding: {{ section.settings.review_padding }}px;
-  border-radius: {{ section.settings.review_border_radius }}px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 40px 30px;
+  border-radius: 16px;
   position: relative;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: none;
+  position: relative;
+  z-index: 1;
 }
+
+{% if section.settings.enable_card_gradient_border %}
+.review-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 16px 16px 0 0;
+  background: {{ section.settings.card_border_gradient }};
+  opacity: {{ section.settings.border_glow_intensity | divided_by: 100.0 }};
+  pointer-events: none;
+  z-index: 0;
+}
+
+.review-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 0 0 16px 16px;
+  background: {{ section.settings.card_border_gradient }};
+  opacity: {{ section.settings.border_glow_intensity | divided_by: 100.0 }};
+  pointer-events: none;
+  z-index: 0;
+}
+{% endif %}
 
 .review-card__quote-icon {
   position: absolute;
-  top: {{ section.settings.review_padding }}px;
-  left: {{ section.settings.review_padding }}px;
-  font-size: {{ section.settings.quote_size }}px;
-  color: {{ section.settings.quote_color }};
-  opacity: 0.4;
+  top: 10px;
+  left: 10px;
   line-height: 1;
+  z-index: 5;
+  opacity: 0.5; /* Reduced opacity for better text readability */
+  transform: translate(0, 0); /* Don't translate outside the card */
+  {% if section.settings.quote_icon_image == blank %}
+    font-family: Georgia, serif;
+    font-size: 60px; /* Reduced size */
+    color: {{ section.settings.quote_color }};
+  {% else %}
+    width: {{ section.settings.quote_size }}px;
+    height: {{ section.settings.quote_size }}px;
+  {% endif %}
+}
+
+.review-card__quote-icon img {
+  
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
+.review-card__quote-icon::before {
+  {% if section.settings.quote_icon_image == blank %}
+    content: '"';
+  {% endif %}
+  text-shadow: 0 0 10px rgba(0,0,0,0.3); /* Add shadow to help separate from text */
 }
 
 .review-card__content {
-  margin-bottom: 20px;
   position: relative;
   z-index: 2;
+  flex-grow: 1;
+  margin-bottom: 15px;
+  margin-top: 5px; /* Add some top margin to separate from quote icon */
 }
 
 .review-card__text {
   margin: 0;
   line-height: 1.6;
   font-size: {{ section.settings.review_text_size_desktop }}px;
+  font-weight: 300;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  padding-top: 5px;
+  color: rgba(255,255,255,0.9);
+  z-index: 10; /* Ensure text is above quote icon */
 }
 
 .reviewer {
   display: flex;
   align-items: center;
   gap: 15px;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .reviewer__image {
@@ -582,6 +766,9 @@
   border-radius: 50%;
   overflow: hidden;
   position: relative;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: #121212;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .reviewer__image img {
@@ -599,6 +786,7 @@
   right: 0;
   bottom: 0;
   z-index: 1;
+  border-radius: 50%;
 }
 
 .reviewer__details {
@@ -609,11 +797,16 @@
 .reviewer__name {
   margin: 0;
   font-weight: 600;
+  color: {{ section.settings.colored_word_color }};
+  line-height: 1.2;
 }
 
 .reviewer__title {
   margin: 0;
   opacity: 0.8;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.4;
 }
 
 @media screen and (max-width: 991px) {
@@ -632,10 +825,10 @@
     gap: 20px;
   }
   
-  .custom-reviews__slide {
+  /* .custom-reviews__slide {
     flex: 0 0 calc(100% - 20px);
   }
-  
+   */
   .slider-controls {
     margin-top: 20px;
   }
@@ -648,6 +841,11 @@
     width: 6px;
     height: 6px;
   }
+  
+  /* Better infinite loop positioning on mobile */
+  .custom-reviews__slider.few-cards {
+    padding: 0 10px;
+  }
 }
 </style>
 
@@ -655,8 +853,7 @@
   <div class="custom-reviews__container">
     <div class="custom-reviews__heading">
       <h2 class="custom-reviews__heading-text">
-        {% assign heading_parts = section.settings.main_heading | split: section.settings.colored_word %}
-        {{ heading_parts[0] }}<span class="custom-reviews__heading-colored">{{ section.settings.colored_word }}</span>{{ heading_parts[1] }}
+        What our <span class="custom-reviews__heading-colored">Users</span> Say
       </h2>
     </div>
     
@@ -673,21 +870,14 @@
       {% for block in section.blocks %}
         {% if block.type == "review" %}
           <div class="review-card{% if use_slider %} custom-reviews__slide{% endif %}" {{ block.shopify_attributes }} data-block-id="{{ block.id }}">
-            <div class="review-card__quote-icon">&ldquo;</div>
-            
-            <div class="review-card__content">
-              <p class="review-card__text" style="
-                {% if block.settings.use_text_gradient %}
-                  background: {{ block.settings.text_gradient }};
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                {% else %}
-                  color: {{ block.settings.review_text_color }};
-                {% endif %}
-                font-size: {{ block.settings.review_text_size_desktop }}px;">
-                {{ block.settings.review_text }}
-              </p>
+            <div class="review-card__quote-icon">
+              {% if section.settings.quote_icon_image != blank %}
+                <img src="{{ section.settings.quote_icon_image | image_url }}" 
+                     width="{{ section.settings.quote_size | times: 2 }}" 
+                     height="{{ section.settings.quote_size | times: 2 }}" 
+                     alt="Quote icon" 
+                     loading="lazy">
+              {% endif %}
             </div>
             
             <div class="reviewer">
@@ -699,7 +889,7 @@
                       opacity: {{ block.settings.image_bg_opacity | divided_by: 100.0 }};">
                     </div>
                   {% endif %}
-                  <img src="{{ block.settings.reviewer_image | img_url: '100x100', crop: 'center' }}" alt="{{ block.settings.reviewer_name }}">
+                  <img src="{{ block.settings.reviewer_image | image_url: width: 80 }}" width="40" height="40" alt="{{ block.settings.reviewer_name }}" loading="lazy">
                 </div>
               {% endif %}
               
@@ -730,6 +920,21 @@
                 </p>
               </div>
             </div>
+            
+            <div class="review-card__content">
+              <p class="review-card__text" style="
+                {% if block.settings.use_text_gradient %}
+                  background: {{ block.settings.text_gradient }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.review_text_color }};
+                {% endif %}
+                font-size: {{ block.settings.review_text_size_desktop }}px;">
+                {{ block.settings.review_text }}
+              </p>
+            </div>
           </div>
         {% endif %}
       {% endfor %}
@@ -743,11 +948,7 @@
       <div class="slider-controls">
         <button class="slider-arrow slider-prev" aria-label="Previous slide">&larr;</button>
         {% if section.settings.show_dots %}
-          <div class="slider-dots" id="sliderDots">
-            {% for i in (1..section.blocks.size) %}
-              <span class="slider-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}"></span>
-            {% endfor %}
-          </div>
+          <div class="slider-dots" id="sliderDots"></div>
         {% endif %}
         <button class="slider-arrow slider-next" aria-label="Next slide">&rarr;</button>
       </div>
@@ -782,221 +983,348 @@
   -webkit-text-fill-color: transparent !important;
   color: transparent !important;
 }
+
+/* Quote marks styling */
+.review-card__quote-icon {
+  font-family: 'Georgia', serif;
+  font-size: 80px;
+  position: absolute;
+   top: -167px;
+  left: 15px;
+  color: #4A90E2;
+  opacity: 1; /* Changed from 0.1 to make icon fully visible */
+  line-height: 0.8;
+  z-index: 10;
+  transform: translate(0, 0);
+}
+
+/* Style adjustments to match the design in the image */
+#shopify-section-{{ section.id }} .custom-reviews__heading-text {
+  font-size: 44px;
+  font-weight: 500;
+}
+
+#shopify-section-{{ section.id }} .custom-reviews__heading-colored {
+  color: #4A90E2;
+  position: relative;
+  margin: 0 10px;
+}
+
+#shopify-section-{{ section.id }} .review-card {
+  min-height: 280px;
+  padding: 45px 30px 25px 30px; /* Increased top padding to make room for quote icon */
+  border-radius: 16px;
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: visible; /* Changed from hidden to visible for the quote icon */
+  height: 100%; /* Use full height of container */
+  display: flex;
+  flex-direction: column;
+  margin: 20px 5px; /* Better spacing for slick slider */
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+#shopify-section-{{ section.id }} .reviewer__name {
+  color: #4A90E2;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#shopify-section-{{ section.id }} .reviewer__title {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* Card gradient border effect */
+#shopify-section-{{ section.id }} .review-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 16px 16px 0 0;
+  background: {{ section.settings.card_border_gradient }};
+  opacity: {{ section.settings.border_glow_intensity | divided_by: 100.0 }};
+  box-shadow: 0 0 {{ section.settings.border_glow_spread }}px {{ section.settings.border_glow_spread | divided_by: 2 }}px rgba(74, 144, 226, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#shopify-section-{{ section.id }} .review-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 0 0 16px 16px;
+  background: {{ section.settings.card_border_gradient }};
+  opacity: {{ section.settings.border_glow_intensity | divided_by: 100.0 }};
+  box-shadow: 0 0 {{ section.settings.border_glow_spread }}px {{ section.settings.border_glow_spread | divided_by: 2 }}px rgba(74, 144, 226, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Improve profile image display */
+#shopify-section-{{ section.id }} .reviewer__image {
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 3;
+}
+
+#shopify-section-{{ section.id }} .reviewer__image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: 50%;
+  background: {{ section.settings.card_border_gradient }};
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 2;
+  opacity: {{ section.settings.border_glow_intensity | divided_by: 100.0 }};
+  box-shadow: 0 0 10px {{ section.settings.border_glow_spread }}px rgba(74, 144, 226, 0.4);
+}
+
+@media screen and (max-width: 768px) {
+  #shopify-section-{{ section.id }} .custom-reviews__heading-text {
+    font-size: 32px;
+  }
+  
+  #shopify-section-{{ section.id }} .review-card__quote-icon {
+    font-size: 40px; /* Even smaller on mobile */
+    top: -100px;
+    left: 8px;
+    transform: translate(0, 0);
+  }
+  
+  #shopify-section-{{ section.id }} .review-card {
+    min-height: auto;
+    padding: 35px 20px 20px; /* Adjusted padding to fit quote icon */
+    margin: 10px 0;
+    width: calc(100% - 10px); /* Fix width issues on mobile */
+  }
+  
+  /* Fix slider arrows on mobile */
+  #shopify-section-{{ section.id }} .slider-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  /* Better container padding on mobile */
+  #shopify-section-{{ section.id }} .custom-reviews__container {
+    padding: 0 20px;
+  }
+}
 {% endstyle %}
 
 {% if section.settings.slider_mode == 'always' or section.settings.slider_mode == 'auto' and section.blocks.size > 4 %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const slider = document.getElementById('reviewsSlider');
-  const slidesContainer = document.querySelector('.custom-reviews__grid');
-  const slides = document.querySelectorAll('.custom-reviews__item');
-  const dots = document.querySelectorAll('.slider-dot');
-  const prevBtn = document.querySelector('.slider-prev');
-  const nextBtn = document.querySelector('.slider-next');
-  let currentSlide = 0;
-  const slideCount = {{ section.blocks.size }};
-  let visibleSlides = 1;
-  
-  // Set initial visibleSlides based on screen width
-  if (window.innerWidth > 991) {
-    visibleSlides = {{ section.settings.max_reviews_per_row }};
-  } else if (window.innerWidth > 768) {
-    visibleSlides = 2;
-  }
-  
-  let maxSlide = Math.max(0, slideCount - visibleSlides);
-  let autoplayInterval;
-  
-  // Set up slider styles
-  function setupSliderStyles() {
-    if (slidesContainer) {
-      slidesContainer.style.display = 'flex';
-      slidesContainer.style.flexWrap = 'nowrap';
-      slidesContainer.style.transition = 'transform 0.4s ease';
-      slidesContainer.style.width = '100%';
+<!-- Slick slider CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+<!-- Slick slider JS -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  setTimeout(() => {
+    initializeReviewsSlider();
+  }, 300);
+
+  function initializeReviewsSlider() {
+    const $slider = $('#reviewsSlider');
+
+    // Guard clause: No slider found
+    if ($slider.length === 0) return;
+
+    const slideCount = {{ section.blocks.size }};
+    const maxSlides = Math.min({{ section.settings.max_reviews_per_row }}, slideCount);
+    const showDots = {{ section.settings.show_dots | json }};
+    const autoPlay = {{ section.settings.auto_slide | json }};
+    const autoPlaySpeed = {{ section.settings.slider_speed | default: 3000 }};
+    const enableArrows = false; // Change to true if needed
+
+    // Destroy previous Slick instance if exists
+    if ($slider.hasClass('slick-initialized')) {
+      $slider.slick('unslick');
     }
-    
-    if (slides) {
-      slides.forEach(slide => {
-        slide.style.flex = '0 0 auto';
-        if (window.innerWidth > 991) {
-          slide.style.width = `${100 / visibleSlides}%`;
-        } else if (window.innerWidth > 768) {
-          slide.style.width = '50%';
-        } else {
-          slide.style.width = '100%';
+
+    // Initialize Slick slider
+    $slider.slick({
+      slidesToShow: maxSlides,
+      slidesToScroll: 1,
+      arrows: enableArrows,
+      dots: showDots,
+      infinite: true,
+      speed: 500,
+      cssEase: 'cubic-bezier(0.25, 1, 0.5, 1)',
+      waitForAnimate: true,
+      adaptiveHeight: false,
+      centerMode: false,
+      centerPadding: '0px',
+      autoplay: autoPlay,
+      autoplaySpeed: autoPlaySpeed,
+      pauseOnHover: true,
+      pauseOnFocus: true,
+
+      // Only include custom arrows if arrows are enabled
+      ...(enableArrows && {
+        appendArrows: $('.slider-controls'),
+        prevArrow: $('.slider-prev'),
+        nextArrow: $('.slider-next'),
+      }),
+      appendDots: $('#sliderDots'),
+
+      // Responsive breakpoints
+      responsive: [
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            dots: false
+          }
         }
-      });
-    }
-  }
-  
-  // Initial setup
-  setupSliderStyles();
-  updateSliderPosition();
-  
-  // Set up event listeners
-  if (prevBtn) {
-    prevBtn.addEventListener('click', function() {
-      prevSlide();
-      stopAutoplay();
-      startAutoplay();
+      ]
     });
-  }
-  
-  if (nextBtn) {
-    nextBtn.addEventListener('click', function() {
-      nextSlide();
-      stopAutoplay();
-      startAutoplay();
-    });
-  }
-  
-  // Set up dots if they exist
-  if (dots) {
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        goToSlide(index);
-        stopAutoplay();
-        startAutoplay();
-      });
-    });
-  }
-  
-  // Set up autoplay if enabled
-  {% if section.settings.auto_slide %}
-  startAutoplay();
-  
-  // Pause autoplay on hover
-  const sliderContainer = document.getElementById('reviewsContainer');
-  if (sliderContainer) {
-    sliderContainer.addEventListener('mouseenter', stopAutoplay);
-    sliderContainer.addEventListener('mouseleave', startAutoplay);
-  }
-  {% endif %}
-  
-  // Add touch swipe support
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
-  if (slidesContainer) {
-    slidesContainer.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      stopAutoplay();
-    }, {passive: true});
-    
-    slidesContainer.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-      startAutoplay();
-    }, {passive: true});
-  }
-  
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    if (touchEndX < touchStartX - swipeThreshold && currentSlide < maxSlide) {
-      // Swipe left
-      nextSlide();
-    } else if (touchEndX > touchStartX + swipeThreshold && currentSlide > 0) {
-      // Swipe right
-      prevSlide();
+
+    // Hide arrows manually in DOM if not needed
+    if (!enableArrows) {
+      $('.slider-prev, .slider-next').hide();
     }
-  }
-  
-  // Handle window resize
-  window.addEventListener('resize', handleResize);
-  
-  function updateSliderPosition() {
-    if (!slidesContainer) return;
-    
-    // Calculate the percentage to translate based on visible slides
-    const translateValue = -currentSlide * (100 / visibleSlides);
-    slidesContainer.style.transform = `translateX(${translateValue}%)`;
-    
-    // Update active dot
-    if (dots) {
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-      });
-    }
-    
-    // Update button states
-    if (prevBtn) {
-      prevBtn.disabled = currentSlide === 0;
-      prevBtn.style.opacity = currentSlide === 0 ? "0.5" : "1";
-    }
-    
-    if (nextBtn) {
-      nextBtn.disabled = currentSlide >= maxSlide;
-      nextBtn.style.opacity = currentSlide >= maxSlide ? "0.5" : "1";
-    }
-  }
-  
-  function nextSlide() {
-    if (currentSlide < maxSlide) {
-      currentSlide++;
-    } else {
-      currentSlide = 0; // Loop back to beginning
-    }
-    updateSliderPosition();
-  }
-  
-  function prevSlide() {
-    if (currentSlide > 0) {
-      currentSlide--;
-    } else {
-      currentSlide = maxSlide; // Loop to end
-    }
-    updateSliderPosition();
-  }
-  
-  function goToSlide(slideIndex) {
-    currentSlide = Math.max(0, Math.min(slideIndex, maxSlide));
-    updateSliderPosition();
-  }
-  
-  function startAutoplay() {
-    {% if section.settings.auto_slide %}
-    stopAutoplay();
-    autoplayInterval = setInterval(nextSlide, {{ section.settings.slider_speed }});
-    {% endif %}
-  }
-  
-  function stopAutoplay() {
-    if (autoplayInterval) {
-      clearInterval(autoplayInterval);
-    }
-  }
-  
-  function handleResize() {
-    // Recalculate visible slides on window resize
-    let newVisibleSlides = 1;
-    
-    if (window.innerWidth > 991) {
-      newVisibleSlides = {{ section.settings.max_reviews_per_row }};
-    } else if (window.innerWidth > 768) {
-      newVisibleSlides = 2;
-    }
-    
-    // Update slide widths
-    if (slides) {
-      slides.forEach(slide => {
-        if (window.innerWidth > 991) {
-          slide.style.width = `${100 / newVisibleSlides}%`;
-        } else if (window.innerWidth > 768) {
-          slide.style.width = '50%';
-        } else {
-          slide.style.width = '100%';
+
+    // Refresh on window resize
+    $(window).on('resize', function () {
+      clearTimeout(window._slickResizeTimer);
+      window._slickResizeTimer = setTimeout(() => {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('refresh');
         }
-      });
-    }
-    
-    if (newVisibleSlides !== visibleSlides) {
-      visibleSlides = newVisibleSlides;
-      maxSlide = Math.max(0, slideCount - visibleSlides); // Update maxSlide
-      currentSlide = Math.min(currentSlide, maxSlide);
-      updateSliderPosition();
-    }
+      }, 250);
+    });
+
+    // Refresh after images load (for height)
+    $(window).on('load', function () {
+      setTimeout(() => {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('refresh');
+        }
+      }, 300);
+    });
+
+    // Debug log
+    console.log('✅ Slick initialized:', {
+      totalSlides: slideCount,
+      visibleSlides: maxSlides
+    });
   }
 });
 </script>
+
+
+<style>
+/* Additional Slick slider styling to match your design */
+.slick-slide {
+  padding: 0;
+  box-sizing: border-box;
+  height: auto;
+  margin: 0 10px; /* Add horizontal spacing between slides */
+}
+
+@media screen and (max-width: 768px) {
+  .slick-slide {
+    margin: 0 5px; /* Reduce margin on mobile */
+    width: 100% !important; /* Force single slide width on mobile */
+  }
+  
+  .slick-list {
+    padding: 0 !important; /* Reset padding on mobile */
+  }
+}
+
+.slick-track {
+  display: flex !important;
+  align-items: stretch;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.slick-slide > div {
+  height: 100%;
+  width: 100%;
+  padding: 0 5px;
+}
+
+/* Fix for arrow positioning */
+.slick-arrow {
+  z-index: 10;
+}
+
+/* Fix height issues */
+.slick-list, .slick-track {
+  height: 100%;
+}
+
+/* Fix mobile slider display */
+@media screen and (max-width: 768px) {
+  .slick-initialized .slick-slide {
+    display: block !important;
+    float: none;
+    margin: 0 auto 20px;
+    clear: both;
+  }
+}
+
+/* Custom dots styling */
+.slick-dots li button:before {
+  color: {{ section.settings.heading_color }};
+  opacity: 0.3;
+  font-size: 8px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: {{ section.settings.colored_word_color }};
+  opacity: 1;
+}
+
+/* Better equal height handling */
+.custom-reviews__slider .slick-track {
+  display: flex !important;
+}
+
+.custom-reviews__slider .slick-slide {
+  height: auto;
+  display: flex !important;
+}
+
+.custom-reviews__slider .slick-slide > div {
+  width: 100%;
+  display: flex;
+}
+
+.custom-reviews__slider .slick-slide .review-card {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+</style>
 {% endif %}
