@@ -853,7 +853,10 @@
   <div class="custom-reviews__container">
     <div class="custom-reviews__heading">
       <h2 class="custom-reviews__heading-text">
-        What our <span class="custom-reviews__heading-colored">Users</span> Say
+        {% assign heading = section.settings.main_heading %}
+        {% assign colored_word = section.settings.colored_word %}
+        {% assign parts = heading | split: colored_word %}
+        {{ parts[0] }}<span class="colored-word">{{ colored_word }}</span>{% if parts[1] %}{{ parts[1] }}{% endif %}
       </h2>
     </div>
     
@@ -983,7 +986,17 @@
   -webkit-text-fill-color: transparent !important;
   color: transparent !important;
 }
-
+.slick-prev, .slick-next{
+  top:104% !important;
+  z-index: 10 !important;
+}
+.slick-prev{
+  right:75px !important;
+  left: auto !important;
+}
+.slick-next{
+  right: 44px !important;
+}
 /* Quote marks styling */
 .review-card__quote-icon {
   font-family: 'Georgia', serif;
@@ -1004,10 +1017,9 @@
   font-weight: 500;
 }
 
-#shopify-section-{{ section.id }} .custom-reviews__heading-colored {
-  color: #4A90E2;
-  position: relative;
-  margin: 0 10px;
+#shopify-section-{{ section.id }} .custom-reviews__heading-text .colored-word {
+  color: {{ section.settings.colored_word_color }};
+  display: inline;
 }
 
 #shopify-section-{{ section.id }} .review-card {
@@ -1200,7 +1212,7 @@ $(document).ready(function () {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
-            arrows: false,
+            arrows: true,
             dots: false
           }
         }
