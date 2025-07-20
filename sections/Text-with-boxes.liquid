@@ -55,6 +55,27 @@
       "info": "Controls the spacing between the main heading and the boxes below"
     },
     {
+      "type": "select",
+      "id": "heading_text_alignment",
+      "label": "Heading Text Alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "info": "Choose how to align the main heading text"
+    },
+    {
       "type": "header",
       "content": "Auto-Slide Settings"
     },
@@ -283,8 +304,9 @@
   padding: 0 20px;
 }
 
-.main-heading {
-  text-align: center;
+.text-boxes-section .main-heading,
+#text-boxes-main-heading-unique {
+  text-align: {{ section.settings.heading_text_alignment | default: 'center' }} !important;
   margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
   background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
   -webkit-background-clip: text;
@@ -529,9 +551,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  .main-heading {
+  .text-boxes-section .main-heading,
+  #text-boxes-main-heading-unique {
     font-size: {{ section.settings.heading_size_mobile }}px !important;
     margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
+    text-align: {{ section.settings.heading_text_alignment | default: 'center' }} !important;
   }
 
   {% comment %} Mobile font sizes for each block {% endcomment %}
@@ -610,7 +634,7 @@
 
 <div class="text-boxes-section">
   <div class="text-boxes-container">
-    <h2 class="main-heading">{{ section.settings.main_heading }}</h2>
+    <h2 class="main-heading" id="text-boxes-main-heading-unique">{{ section.settings.main_heading }}</h2>
     
     <div class="boxes-slider-container">
       <div class="boxes-grid{% if section.blocks.size > 3 %} slider{% endif %}{% if section.blocks.size > 1 %} mobile-slider{% endif %}">

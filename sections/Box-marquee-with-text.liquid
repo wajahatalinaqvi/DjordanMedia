@@ -17,6 +17,23 @@
       "unit": "s"
     },
     {
+      "type": "select",
+      "id": "scroll_direction",
+      "label": "Scroll Direction",
+      "default": "right",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left to Right"
+        },
+        {
+          "value": "right",
+          "label": "Right to Left"
+        }
+      ],
+      "info": "Choose the direction of the marquee scroll"
+    },
+    {
       "type": "header",
       "content": "Box Settings"
     },
@@ -125,7 +142,7 @@
   ],
   "presets": [
     {
-      "name": "Box Marquee with Text",
+      "name": "Promotional Marquee",
       "blocks": [
         {
           "type": "marquee_text",
@@ -173,10 +190,14 @@
 
 .marquee-container {
   display: flex;
-  animation: scroll {{ section.settings.scroll_speed }}s linear infinite;
   white-space: nowrap;
   width: fit-content;
   gap: {{ section.settings.box_gap }}px;
+  animation: scroll-{{ section.settings.scroll_direction | default: 'right' }} {{ section.settings.scroll_speed }}s linear infinite;
+}
+
+.marquee-container:hover {
+  animation-play-state: paused;
 }
 
 .marquee-box {
@@ -187,6 +208,7 @@
   align-items: center;
   justify-content: center;
   min-width: max-content;
+  flex-shrink: 0;
 }
 
 .marquee-text {
@@ -197,12 +219,23 @@
   font-weight: 500;
 }
 
-@keyframes scroll {
+/* Right to Left Animation (Traditional marquee) */
+@keyframes scroll-right {
   0% {
-    transform: translateX(0);
+    transform: translateX(100vw);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
+  }
+}
+
+/* Left to Right Animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
   }
 }
 
@@ -214,37 +247,25 @@
   .marquee-container {
     gap: {{ section.settings.box_gap_mobile }}px;
   }
-  
-  .marquee-container-clone {
-    margin-left: {{ section.settings.box_gap_mobile }}px;
-  }
 }
 </style>
 
 <div class="marquee-section">
-  <div class="marquee-container">
-    {% for block in section.blocks %}
-      <div class="marquee-box">
-        <div class="marquee-text"
-             style="
-               font-size: {{ block.settings.font_size }}px;
-               --text-gradient-from: {{ block.settings.text_gradient_from }};
-               --text-gradient-to: {{ block.settings.text_gradient_to }};">
-          {{ block.settings.text }}
+  <div class="marquee-wrapper">
+    <div class="marquee-container">
+      {% comment %} Single set of blocks for continuous scroll {% endcomment %}
+      {% for block in section.blocks %}
+        <div class="marquee-box">
+          <div class="marquee-text"
+               style="
+                 font-size: {{ block.settings.font_size }}px;
+                 --text-gradient-from: {{ block.settings.text_gradient_from }};
+                 --text-gradient-to: {{ block.settings.text_gradient_to }};">
+            {{ block.settings.text }}
+          </div>
         </div>
-      </div>
-    {% endfor %}
-    {% for block in section.blocks %}
-      <div class="marquee-box">
-        <div class="marquee-text"
-             style="
-               font-size: {{ block.settings.font_size }}px;
-               --text-gradient-from: {{ block.settings.text_gradient_from }};
-               --text-gradient-to: {{ block.settings.text_gradient_to }};">
-          {{ block.settings.text }}
-        </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
@@ -252,7 +273,7 @@
 @media screen and (max-width: 768px) {
   {% for block in section.blocks %}
     #shopify-section-{{ section.id }} .marquee-box:nth-child({{ forloop.index }}) .marquee-text {
-      font-size: {{ block.settings.font_size_mobile }}px;
+      font-size: {{ block.settings.font_size_mobile }}px !important;
     }
   {% endfor %}
 }
