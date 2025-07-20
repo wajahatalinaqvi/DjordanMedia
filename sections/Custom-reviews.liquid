@@ -606,7 +606,7 @@
   margin-left: 10px;
 }
 
-.slider-dots {
+.slider-dots-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -615,12 +615,12 @@
 }
 
 /* Slick will add dots dynamically */
-.slider-dots li {
+.slider-dots-dots li {
   display: inline-block;
   margin: 0 4px;
 }
 
-.slider-dots li button {
+.slider-dots-dots li button {
   border: 0;
   background: transparent;
   color: transparent;
@@ -634,7 +634,7 @@
   position: relative;
 }
 
-.slider-dots li button:before {
+.slider-dots-dots li button:before {
   content: '';
   position: absolute;
   top: 0;
@@ -647,7 +647,7 @@
   transition: all 0.3s ease;
 }
 
-.slider-dots li.slick-active button:before {
+.slider-dots-dots li.slick-active button:before {
   opacity: 1;
   background-color: {{ section.settings.colored_word_color }};
 }
@@ -833,7 +833,7 @@
     margin-top: 20px;
   }
   
-  .slider-dots {
+  .slider-dots-dots {
     gap: 6px;
   }
   
@@ -948,7 +948,7 @@
       <div class="slider-controls">
         <button class="slider-arrow slider-prev" aria-label="Previous slide">&larr;</button>
         {% if section.settings.show_dots %}
-          <div class="slider-dots" id="sliderDots"></div>
+          <div class="slider-dots-dots" id="sliderDots"></div>
         {% endif %}
         <button class="slider-arrow slider-next" aria-label="Next slide">&rarr;</button>
       </div>
@@ -1011,7 +1011,7 @@
 }
 
 #shopify-section-{{ section.id }} .review-card {
-  min-height: 280px;
+  min-height: 339px;
   padding: 45px 30px 25px 30px; /* Increased top padding to make room for quote icon */
   border-radius: 16px;
   background: rgba(18, 18, 18, 0.6);
@@ -1107,9 +1107,9 @@
   }
   
   #shopify-section-{{ section.id }} .review-card {
-    min-height: auto;
+    min-height: 220px;
     padding: 35px 20px 20px; /* Adjusted padding to fit quote icon */
-    margin: 10px 0;
+    margin: 10px 20px;
     width: calc(100% - 10px); /* Fix width issues on mobile */
   }
   
