@@ -44,6 +44,17 @@
       "unit": "px"
     },
     {
+      "type": "range",
+      "id": "heading_bottom_gap",
+      "label": "Gap Between Heading and Boxes",
+      "default": 50,
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "info": "Controls the spacing between the main heading and the boxes below"
+    },
+    {
       "type": "header",
       "content": "Auto-Slide Settings"
     },
@@ -274,15 +285,27 @@
 
 .main-heading {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
   background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: {{ section.settings.heading_size_desktop }}px;
+  font-size: {{ section.settings.heading_size_desktop }}px !important;
   font-weight: 600;
   line-height: 1.2;
 }
+
+{% comment %} Generate CSS custom properties for each block {% endcomment %}
+{% for block in section.blocks %}
+  {% if block.type == 'box' %}
+    .box[data-block-id="{{ block.id }}"] .box-heading {
+      font-size: {{ block.settings.heading_size_desktop }}px;
+    }
+    .box[data-block-id="{{ block.id }}"] .box-subheading {
+      font-size: {{ block.settings.subheading_size_desktop }}px;
+    }
+  {% endif %}
+{% endfor %}
 
 .boxes-slider-container {
   position: relative;
@@ -497,21 +520,31 @@
 
 .box-heading {
   margin: 0 0 10px;
-  font-size: {{ block.settings.heading_size_desktop }}px;
   font-weight: 600;
 }
 
 .box-subheading {
   margin: 0;
-  font-size: {{ block.settings.subheading_size_desktop }}px;
   font-weight: 400;
 }
 
 @media screen and (max-width: 768px) {
   .main-heading {
-    font-size: {{ section.settings.heading_size_mobile }}px;
-    margin-bottom: 30px;
+    font-size: {{ section.settings.heading_size_mobile }}px !important;
+    margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
   }
+
+  {% comment %} Mobile font sizes for each block {% endcomment %}
+  {% for block in section.blocks %}
+    {% if block.type == 'box' %}
+      .box[data-block-id="{{ block.id }}"] .box-heading {
+        font-size: {{ block.settings.heading_size_mobile }}px !important;
+      }
+      .box[data-block-id="{{ block.id }}"] .box-subheading {
+        font-size: {{ block.settings.subheading_size_mobile }}px !important;
+      }
+    {% endif %}
+  {% endfor %}
 
   .boxes-grid:not(.slider):not(.mobile-slider) {
     grid-template-columns: 1fr;
@@ -531,14 +564,6 @@
     min-width: calc(100% - 40px);
     flex: 0 0 calc(100% - 40px);
     margin: 0 20px;
-  }
-
-  .box-heading {
-    font-size: {{ block.settings.heading_size_mobile }}px;
-  }
-
-  .box-subheading {
-    font-size: {{ block.settings.subheading_size_mobile }}px;
   }
 
   .slider-arrow {
@@ -591,7 +616,7 @@
       <div class="boxes-grid{% if section.blocks.size > 3 %} slider{% endif %}{% if section.blocks.size > 1 %} mobile-slider{% endif %}">
         {% for block in section.blocks %}
           {% if block.type == 'box' %}
-            <div class="box" {{ block.shopify_attributes }} 
+            <div class="box" data-block-id="{{ block.id }}" {{ block.shopify_attributes }} 
               style="
                 background-color: {{ block.settings.box_bg_color | default: '#0000' }};
                 --border-start-color: {{ block.settings.border_glow_from | default: '#aaa490' }};
@@ -607,8 +632,18 @@
                   <img src="{{ block.settings.icon | image_url: width: 60 }}" width="60" height="60" alt="{{ block.settings.heading }}">
                 {% endif %}
               </div>
-              <h3 class="box-heading" style="background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.heading }}</h3>
-              <p class="box-subheading" style="background: linear-gradient(to right, {{ block.settings.subheading_color_from }}, {{ block.settings.subheading_color_to }}); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ block.settings.subheading }}</p>
+              <h3 class="box-heading" style="
+                background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }}); 
+                -webkit-background-clip: text; 
+                background-clip: text; 
+                -webkit-text-fill-color: transparent;
+              ">{{ block.settings.heading }}</h3>
+              <p class="box-subheading" style="
+                background: linear-gradient(to right, {{ block.settings.subheading_color_from }}, {{ block.settings.subheading_color_to }}); 
+                -webkit-background-clip: text; 
+                background-clip: text; 
+                -webkit-text-fill-color: transparent;
+              ">{{ block.settings.subheading }}</p>
             </div>
           {% endif %}
         {% endfor %}
