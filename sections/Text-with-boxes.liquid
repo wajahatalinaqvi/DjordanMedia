@@ -10,7 +10,32 @@
       "type": "text",
       "id": "main_heading",
       "label": "Main Heading",
-      "default": "Join a Global Community and Master Timeless Skills!"
+      "default": "Join a Global Community and Master Timeless Skills!",
+      "info": "Use [gradient]word[/gradient] to apply gradient to specific words"
+    },
+    {
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Text Transformation",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "Normal"
+        },
+        {
+          "value": "uppercase",
+          "label": "UPPERCASE"
+        },
+        {
+          "value": "lowercase",
+          "label": "lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize Each Word"
+        }
+      ]
     },
     {
       "type": "color",
@@ -22,6 +47,18 @@
       "type": "color",
       "id": "heading_gradient_to",
       "label": "Heading Gradient To",
+      "default": "#9B9B9B"
+    },
+    {
+      "type": "color", 
+      "id": "word_gradient_from",
+      "label": "Word Gradient From (for [gradient] tags)",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "color",
+      "id": "word_gradient_to",
+      "label": "Word Gradient To (for [gradient] tags)",
       "default": "#9B9B9B"
     },
     {
@@ -197,7 +234,32 @@
           "type": "text",
           "id": "heading",
           "label": "Box Heading",
-          "default": "Creators You Love!"
+          "default": "Creators You Love!",
+          "info": "Use [gradient]word[/gradient] to apply gradient to specific words"
+        },
+        {
+          "type": "select",
+          "id": "box_heading_text_transform",
+          "label": "Heading Text Transformation",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "Normal"
+            },
+            {
+              "value": "uppercase",
+              "label": "UPPERCASE"
+            },
+            {
+              "value": "lowercase",
+              "label": "lowercase"
+            },
+            {
+              "value": "capitalize",
+              "label": "Capitalize Each Word"
+            }
+          ]
         },
         {
           "type": "text",
@@ -319,13 +381,26 @@
 #text-boxes-main-heading-unique {
   text-align: {{ section.settings.heading_text_alignment | default: 'center' }} !important;
   margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
+  font-size: {{ section.settings.heading_size_desktop }}px !important;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: {{ section.settings.heading_text_transform }};
+}
+
+.text-boxes-section .main-heading .gradient-word {
+  background: linear-gradient(to right, {{ section.settings.word_gradient_from }}, {{ section.settings.word_gradient_to }});
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.text-boxes-section .main-heading .regular-text {
   background: linear-gradient(to right, {{ section.settings.heading_gradient_from }}, {{ section.settings.heading_gradient_to }});
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: {{ section.settings.heading_size_desktop }}px !important;
-  font-weight: 600;
-  line-height: 1.2;
+  display: inline-block;
 }
 
 {% comment %} Generate CSS custom properties for each block {% endcomment %}
@@ -333,6 +408,7 @@
   {% if block.type == 'box' %}
     .box[data-block-id="{{ block.id }}"] .box-heading {
       font-size: {{ block.settings.heading_size_desktop }}px;
+      text-transform: {{ block.settings.box_heading_text_transform }};
     }
     .box[data-block-id="{{ block.id }}"] .box-subheading {
       font-size: {{ block.settings.subheading_size_desktop }}px;
@@ -340,6 +416,22 @@
     .box[data-block-id="{{ block.id }}"] .icon-container {
       width: {{ block.settings.icon_width | default: 60 }}px;
       height: {{ block.settings.icon_width | default: 60 }}px;
+    }
+    
+    .box[data-block-id="{{ block.id }}"] .box-heading .box-gradient-word {
+      background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }});
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    .box[data-block-id="{{ block.id }}"] .box-heading .box-regular-text {
+      background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }});
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
     }
   {% endif %}
 {% endfor %}
@@ -571,6 +663,7 @@
     font-size: {{ section.settings.heading_size_mobile }}px !important;
     margin-bottom: {{ section.settings.heading_bottom_gap }}px !important;
     text-align: {{ section.settings.heading_text_alignment | default: 'center' }} !important;
+    text-transform: {{ section.settings.heading_text_transform }};
   }
 
   {% comment %} Mobile font sizes for each block {% endcomment %}
@@ -578,6 +671,7 @@
     {% if block.type == 'box' %}
       .box[data-block-id="{{ block.id }}"] .box-heading {
         font-size: {{ block.settings.heading_size_mobile }}px !important;
+        text-transform: {{ block.settings.box_heading_text_transform }};
       }
       .box[data-block-id="{{ block.id }}"] .box-subheading {
         font-size: {{ block.settings.subheading_size_mobile }}px !important;
@@ -649,7 +743,32 @@
 
 <div class="text-boxes-section">
   <div class="text-boxes-container">
-    <h2 class="main-heading" id="text-boxes-main-heading-unique">{{ section.settings.main_heading }}</h2>
+    <h2 class="main-heading" id="text-boxes-main-heading-unique">
+      {% assign heading_content = section.settings.main_heading %}
+      {% assign gradient_pattern = '[gradient]' %}
+      {% assign gradient_end_pattern = '[/gradient]' %}
+      
+      {% if heading_content contains gradient_pattern and heading_content contains gradient_end_pattern %}
+        {% assign parts = heading_content | split: gradient_pattern %}
+        {% assign first_part = parts[0] %}
+        
+        {% if first_part != "" %}
+          <span class="regular-text">{{ first_part }}</span>
+        {% endif %}
+        
+        {% for part in parts offset: 1 %}
+          {% assign subparts = part | split: gradient_end_pattern %}
+          {% if subparts.size > 0 %}
+            <span class="gradient-word">{{ subparts[0] }}</span>
+            {% if subparts[1] != "" %}
+              <span class="regular-text">{{ subparts[1] }}</span>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <span class="regular-text">{{ heading_content }}</span>
+      {% endif %}
+    </h2>
     
     <div class="boxes-slider-container">
       <div class="boxes-grid{% if section.blocks.size > 3 %} slider{% endif %}{% if section.blocks.size > 1 %} mobile-slider{% endif %}">
@@ -674,12 +793,32 @@
                        alt="{{ block.settings.heading }}">
                 {% endif %}
               </div>
-              <h3 class="box-heading" style="
-                background: linear-gradient(to right, {{ block.settings.heading_color_from }}, {{ block.settings.heading_color_to }}); 
-                -webkit-background-clip: text; 
-                background-clip: text; 
-                -webkit-text-fill-color: transparent;
-              ">{{ block.settings.heading }}</h3>
+              <h3 class="box-heading">
+                {% assign box_heading_content = block.settings.heading %}
+                {% assign gradient_pattern = '[gradient]' %}
+                {% assign gradient_end_pattern = '[/gradient]' %}
+                
+                {% if box_heading_content contains gradient_pattern and box_heading_content contains gradient_end_pattern %}
+                  {% assign parts = box_heading_content | split: gradient_pattern %}
+                  {% assign first_part = parts[0] %}
+                  
+                  {% if first_part != "" %}
+                    <span class="box-regular-text">{{ first_part }}</span>
+                  {% endif %}
+                  
+                  {% for part in parts offset: 1 %}
+                    {% assign subparts = part | split: gradient_end_pattern %}
+                    {% if subparts.size > 0 %}
+                      <span class="box-gradient-word">{{ subparts[0] }}</span>
+                      {% if subparts[1] != "" %}
+                        <span class="box-regular-text">{{ subparts[1] }}</span>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  <span class="box-regular-text">{{ box_heading_content }}</span>
+                {% endif %}
+              </h3>
               <p class="box-subheading" style="
                 background: linear-gradient(to right, {{ block.settings.subheading_color_from }}, {{ block.settings.subheading_color_to }}); 
                 -webkit-background-clip: text; 

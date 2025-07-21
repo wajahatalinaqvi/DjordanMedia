@@ -46,26 +46,8 @@
       "step": 5,
       "unit": "px"
     },
-    {
-      "type": "header",
-      "content": "Text Settings"
-    },
-    {
-      "type": "select",
-      "id": "text_alignment",
-      "label": "Text Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "left"
-    },
+ 
+   
     {
       "type": "header",
       "content": "Spacing Settings"
@@ -128,22 +110,13 @@
       "type": "color",
       "id": "dot_color",
       "label": "List Dot Color",
-      "default": "#4A90E2"
+      "default": "#ffffff"
     },
     {
       "type": "header",
       "content": "Text Content Box Settings"
     },
-    {
-      "type": "range",
-      "id": "gradient_angle",
-      "label": "Gradient Angle",
-      "min": 0,
-      "max": 360,
-      "step": 10,
-      "default": 120,
-      "unit": "deg"
-    },
+
     {
       "type": "color",
       "id": "box_bg_start",
@@ -248,8 +221,8 @@
           "type": "range",
           "id": "heading_size_mobile",
           "label": "Font Size (Mobile)",
-          "default": 28,
-          "min": 16,
+          "default": 16,
+          "min": 14,
           "max": 50,
           "step": 2,
           "unit": "px"
@@ -378,8 +351,19 @@
   background: #000000;
  
 }
-
-.video-text-container {
+.list-item-{{ section.id }}::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 7px;
+  border-radius: 50%;
+  background: {{ section.settings.dot_color }} !important;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.6);
+}
+.video-text-container-{{ section.id }}{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
@@ -387,7 +371,10 @@
   margin: 0 auto;
   padding: 0 20px;
   {% if section.settings.video_alignment == 'right' %}
-    direction: rtl;
+     direction: rtl;
+    text-align: left;
+  {% else %}
+    text-align: left;
   {% endif %}
 }
 
@@ -426,7 +413,9 @@
   {% else %}
     text-align: left;
   {% endif %}
-}.text-content::before {
+}
+
+.text-content::before {
   content: '';
   position: absolute;
   top: -32px;
@@ -455,6 +444,7 @@
   line-height: 1.2;
 }
 
+
 .subheading {
   margin-bottom: {{ section.settings.subheading_spacing }}px;
   line-height: 1.3;
@@ -479,7 +469,7 @@
   margin-bottom: {{ section.settings.list_spacing }}px;
 }
 
-.list-item {
+.list-item-{{ section.id }} {
   position: relative;
   padding-left: 20px;
   margin-bottom: {{ section.settings.list_item_spacing }}px;
@@ -488,21 +478,10 @@
     font-weight: 300 !important;
 }
 
-.list-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: {{ section.settings.dot_color }};
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.6);
-}
+
 
 @media screen and (max-width: 768px) {
-  .video-text-container {
+  .video-text-container-{{ section.id }}{
     grid-template-columns: 1fr;
     gap: 30px;
   }
@@ -510,11 +489,25 @@
   .heading-container {
     margin-bottom: 20px;
   }
+  .text-content::before{
+      right: -12px;
+    width: 332px;
 }
+}
+
+
+
+  {% for block in section.blocks %}
+    {% if block.type == "heading_settings" %}
+      #shopify-section-{{ section.id }} .heading-container[data-block-id="{{ block.id }}"] .heading-word {
+        font-size: {{ block.settings.heading_size_desktop }}px;
+      }
+    {% endif %}
+    {% endfor %}
 </style>
 
 <div class="video-with-text">
-  <div class="video-text-container">
+  <div class="video-text-container-{{ section.id }}">
     <div class="video-container">
       {% if section.settings.video_url != blank %}
         {% if section.settings.video_url.type == "youtube" %}
@@ -537,8 +530,7 @@
               {% for word in words %}
                 <span class="heading-word" 
                       style="
-                        color: {{ colors[forloop.index0] | default: colors.last }};
-                        font-size: {{ block.settings.heading_size_desktop }}px;">
+                        color: {{ colors[forloop.index0] | default: colors.last }};">
                   {{ word }}
                 </span>
               {% endfor %}
@@ -558,7 +550,7 @@
         {% elsif block.type == "list_item" %}
           <div class="list-container" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
             <ul class="list-items">
-              <li class="list-item"
+              <li class="list-item-{{ section.id }}"
                   style="font-size: {{ block.settings.text_size_desktop }}px;">
                 {{ block.settings.item_text }}
               </li>
@@ -586,7 +578,7 @@
     {% endif %}
     
     {% if block.type == "list_item" %}
-      #shopify-section-{{ section.id }} .list-container[data-block-id="{{ block.id }}"] .list-item {
+      #shopify-section-{{ section.id }} .list-container[data-block-id="{{ block.id }}"] .-list-item-{{ section.id }} {
         font-size: {{ block.settings.text_size_mobile }}px;
       }
     {% endif %}

@@ -89,6 +89,7 @@
       "block_order": [
         "sky_pilot_digital_downloads_customer_digital_library_button_wEkYXP"
       ],
+      "disabled": true,
       "settings": {
         "full_width": false,
         "space_around": false
