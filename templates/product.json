@@ -25,14 +25,21 @@
         "subheading_bottom_gap": 20,
         "heading_bottom_gap_mobile": 0,
         "subheading_bottom_gap_mobile": 0,
-        "heading": "Master After Effects and Start Creating Now!",
-        "text_alignment": "center",
-        "heading_gradient_from": "#aaa490",
-        "heading_gradient_to": "#ede6ca",
+        "buttons_top_gap": 0,
+        "buttons_top_gap_mobile": 0,
+        "heading": "Master [gradient]After Effects[/gradient] and Start Creating [gradient]Now![/gradient]",
+        "heading_alignment_desktop": "center",
+        "heading_alignment_mobile": "center",
+        "heading_gradient_from": "#f8f8f8",
+        "heading_gradient_to": "#f8f8f8",
+        "word_gradient_from": "#958b5a",
+        "word_gradient_to": "#fef9e3",
         "heading_font_size": 50,
         "heading_font_size_mobile": 30,
         "heading_text_transform": "none",
         "subheading": "Jump into the world of motion graphics with our After Effects course and turn your ideas into professional videos with ease",
+        "subheading_alignment_desktop": "center",
+        "subheading_alignment_mobile": "center",
         "subheading_color": "#ffffff",
         "subheading_font_size": 20,
         "subheading_font_size_mobile": 16,
@@ -57,8 +64,7 @@
         "button2_text_to": "#9b9b9b",
         "button2_border_from": "#333333",
         "button2_border_to": "#4a4a4a",
-        "mobile_button_layout": "stack",
-        "mobile_button_alignment": "center"
+        "mobile_button_layout": "stack"
       }
     },
     "box_marquee_with_text_cmNcaU": {
@@ -120,7 +126,8 @@
         "box_gap": 13,
         "box_gap_mobile": 13,
         "box_bg_from": "#1a1a1a",
-        "box_bg_to": "#2a2a2a"
+        "box_bg_to": "#2a2a2a",
+        "marquee_copies": "2"
       }
     },
     "text_button_with_guidence_wJcPB6": {
@@ -669,6 +676,7 @@
             "icon_glow_color": "#ede6ca",
             "icon_glow_intensity": 60,
             "heading": "Creators You Love!",
+            "box_heading_text_transform": "none",
             "subheading": "Over 800 Creator Joined World Wide",
             "heading_color_from": "#ffffff",
             "heading_color_to": "#9b9b9b",
@@ -694,6 +702,7 @@
             "icon_glow_color": "#ede6ca",
             "icon_glow_intensity": 60,
             "heading": "Build Your Success!",
+            "box_heading_text_transform": "none",
             "subheading": "Build your network, and get support",
             "heading_color_from": "#ffffff",
             "heading_color_to": "#9b9b9b",
@@ -719,6 +728,7 @@
             "icon_glow_color": "#ede6ca",
             "icon_glow_intensity": 60,
             "heading": "Skills That Last Forever",
+            "box_heading_text_transform": "none",
             "subheading": "This is not a one time skill, This is for life",
             "heading_color_from": "#ffffff",
             "heading_color_to": "#9b9b9b",
@@ -739,8 +749,11 @@
       "name": "Text with Boxes",
       "settings": {
         "main_heading": "Join a Global Community and Master Timeless Skills!",
+        "heading_text_transform": "none",
         "heading_gradient_from": "#ffffff",
         "heading_gradient_to": "#ede6ca",
+        "word_gradient_from": "#4a90e2",
+        "word_gradient_to": "#9b9b9b",
         "heading_size_desktop": 55,
         "heading_size_mobile": 20,
         "heading_bottom_gap": 25,
