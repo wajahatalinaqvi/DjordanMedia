@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "color_body_bg": "#020408",
+    "color_body_bg": "#000000",
     "color_body_text": "#ffffff",
     "color_price": "#bd3d3f",
     "color_savings_text": "#bd3d3f",
@@ -25,7 +25,7 @@
     "color_header_text": "#ffffff",
     "color_announcement": "#669bbc",
     "color_announcement_text": "#232323",
-    "color_footer": "#232323",
+    "color_footer": "#000000",
     "color_footer_text": "#ffffff",
     "color_drawer_background": "#232323",
     "color_drawer_text": "#ffffff",
@@ -41,7 +41,7 @@
     "type_header_spacing": "50",
     "type_header_base_size": 36,
     "type_header_line_height": 1.1,
-    "type_header_capitalize": true,
+    "type_header_capitalize": false,
     "type_headers_align_text": true,
     "type_base_font_family": "asap_n4",
     "type_base_spacing": "0",
@@ -59,8 +59,9 @@
     "icon_linecaps": "round",
     "product_save_amount": true,
     "product_save_type": "dollar",
+    "quick_shop_enable": false,
     "quick_shop_text": "Quick view",
-    "product_grid_image_size": "natural",
+    "product_grid_image_size": "portrait",
     "product_hover_image": true,
     "enable_swatches": false,
     "collection_grid_style": "below",

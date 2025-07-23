@@ -18,36 +18,35 @@
           "type": "promotion",
           "settings": {
             "enable_image": true,
-            "image": "shopify:\/\/shop_images\/ESSFXg_d3a0d184-7817-4b21-bf6c-a9013785624d.gif",
+            "image": "shopify://shop_images/ESSFXg_d3a0d184-7817-4b21-bf6c-a9013785624d.gif",
             "image_mask": "square",
             "title": "Essential EXTENSIONS",
             "text": "",
             "button_label": "SHOP NOW",
-            "button_link": "shopify:\/\/collections\/essentials"
+            "button_link": "shopify://collections/essentials"
           }
         },
         "footer-promotions-0": {
           "type": "promotion",
           "settings": {
             "enable_image": true,
-            "image": "shopify:\/\/shop_images\/STONE_HELICOPTER_AdobeExpress_1.gif",
+            "image": "shopify://shop_images/STONE_HELICOPTER_AdobeExpress_1.gif",
             "image_mask": "square",
             "title": "Editing Course",
             "text": "",
             "button_label": "Learn Now",
-            "button_link": "shopify:\/\/collections\/editing-course"
+            "button_link": "shopify://collections/editing-course"
           }
         },
         "footer-promotions-1": {
           "type": "promotion",
           "settings": {
             "enable_image": true,
-            "image": "shopify:\/\/shop_images\/ezgif-3-0a89482510.gif",
             "image_mask": "square",
             "title": "lut packs",
             "text": "",
             "button_label": "view more",
-            "button_link": "shopify:\/\/collections\/lut-pack"
+            "button_link": "shopify://collections/lut-pack"
           }
         }
       },
@@ -64,12 +63,28 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "1494301487049": {
+        "menu_F7kWgw": {
           "type": "menu",
           "settings": {
             "show_footer_title": false,
             "menu": "footer",
-            "container_width": 44
+            "container_width": 22
+          }
+        },
+        "menu_9N66GU": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": false,
+            "menu": "footer",
+            "container_width": 22
+          }
+        },
+        "menu_HzPyiw": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": false,
+            "menu": "footer",
+            "container_width": 23
           }
         },
         "1494292487693": {
@@ -77,13 +92,15 @@
           "settings": {
             "show_footer_title": true,
             "title": "Dont miss out!",
-            "text": "<p>Be the FIRST to hear about new releases, special promotions, and more!<\/p>",
+            "text": "<p>Be the FIRST to hear about new releases, special promotions, and more!</p>",
             "container_width": 33
           }
         }
       },
       "block_order": [
-        "1494301487049",
+        "menu_F7kWgw",
+        "menu_9N66GU",
+        "menu_HzPyiw",
         "1494292487693"
       ],
       "settings": {

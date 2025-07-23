@@ -4,7 +4,112 @@
   Impulse, by Archetype Themes
   http://archetypethemes.co
 */
+/* Select css here */
+.variant-input-wrap{
+  position: relative;
+  z-index: 1;
+  /* background-color: white; */
+  border: none;
+  padding: 10px;
+  width: 100%;
+  appearance: none;
+}
+.variant-input-wrap select{
+  width:100%;
+   border: none;
+   padding:15px;
+}
+.variant-input-wrap option{
+  background:black;
+  color:white;
+}
+.variant-input-wrap::before,
+.variant-input-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+     background: linear-gradient(94deg, rgba(11, 11, 11, 1), rgba(70, 155, 255, 1) 54%, rgba(11, 11, 11, 1) 100%);
+    opacity: 0.5;
+    box-shadow: 0 0 10px #ede6ca;
+}
+.variant-input-wrap::after {
+  top:46px;
+}
+.payment-buttons{
+  display:flex;
+      flex-direction: row-reverse;
+          gap: 10px;
+}
+.wallet-button-wrapper{
+  display:block;
 
+}
+.add-to-cart.btn--secondary{
+      width: 122px;
+}
+.payment-buttons > button > span{
+  display:none;
+}
+.add-to-cart{
+     height: 27px;
+    width: 12px !important;
+    border:none !important;
+    background:#1b1b1b !important;
+    border-radius: 12px !important;
+        margin: 7px 0px !important;
+}
+.add-to-cart::before {
+   content: "";
+  display: inline-block;
+  width: 24px;  /* Adjust size as needed */
+  height: 24px;
+  background-image: url('https://cdn.shopify.com/s/files/1/0615/9532/0575/files/bag-2.png?v=1753207895');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.shopify-payment-button{
+width:100% !important;
+   border: none !important;
+   background:transparent !important;
+   color:white !important;
+}
+.shopify-payment-button__button{
+  background:transparent !important;
+}
+.accelerated-checkout-button button{
+  background-color: green !important;
+}
+.gravity-button{
+    background-color:red !important;
+}
+.gravity-button:not([disabled]):hover{
+  background:transparent !important;
+}
+
+.gravity-button::before,
+.gravity-button::after {
+      content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+     background: linear-gradient(94deg, rgba(11, 11, 11, 1), rgba(70, 155, 255, 1) 54%, rgba(11, 11, 11, 1) 100%);
+    opacity: 0.5;
+    box-shadow: 0 0 10px #ede6ca;
+}
+/* #SingleOptionSelector-template--19817776382207__main-8431115370751-option-0::before {
+  top: 0;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+}
+
+#SingleOptionSelector-template--19817776382207__main-8431115370751-option-0::after {
+  bottom: 0;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+} */
+/* select css here ended */
 @media only screen and (min-width:769px){
   :root{
     --grid-gutter:22px;

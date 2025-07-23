@@ -11,6 +11,7 @@
   "sections": {
     "text_with_button_zDdHKY": {
       "type": "Text-with-Button",
+      "disabled": true,
       "name": "Text with Buttons",
       "settings": {
         "section_padding_top": 80,
@@ -117,6 +118,7 @@
         "marquee_text_9JDNrq",
         "marquee_text_cnJheQ"
       ],
+      "disabled": true,
       "name": "Promotional Marquee",
       "settings": {
         "scroll_speed": 20,
@@ -127,7 +129,7 @@
         "box_gap_mobile": 13,
         "box_bg_from": "#1a1a1a",
         "box_bg_to": "#2a2a2a",
-        "marquee_copies": "2"
+        "marquee_copies": "4"
       }
     },
     "text_button_with_guidence_wJcPB6": {
@@ -224,6 +226,7 @@
         "feature_pkfwm8",
         "feature_U4y6kD"
       ],
+      "disabled": true,
       "name": "Text Button With Guidance",
       "settings": {
         "padding_top": 35,
@@ -352,6 +355,7 @@
         "list_item_bPydbx",
         "list_item_yfAEj4"
       ],
+      "disabled": true,
       "name": "Video With Text",
       "settings": {
         "padding_top": 60,
@@ -369,12 +373,13 @@
         "box_bg_end": "#1e1e1ecc",
         "text_color": "#ffffff",
         "video_alignment": "left",
-        "video_url": "",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/01f0dce4a82e4ac2bcdf84d7f07cf249.mp4",
         "video_cover": "shopify://shop_images/Rectangle_27.png"
       }
     },
     "gradient_heading_dbe6J6": {
       "type": "gradient-heading",
+      "disabled": true,
       "name": "Gradient Heading",
       "settings": {
         "heading_text": "Made With Essential [gradient] SFX[/gradient]",
@@ -428,6 +433,7 @@
       "block_order": [
         "spark_spotlight_carousal_zAN9rP"
       ],
+      "disabled": true,
       "settings": {
         "full_width": false,
         "space_around": true
@@ -493,6 +499,7 @@
         "list_item_8DHp9a",
         "list_item_zbfzWy"
       ],
+      "disabled": true,
       "name": "Video With Text",
       "settings": {
         "padding_top": 60,
@@ -516,6 +523,7 @@
     },
     "gradient_heading_H9dKFq": {
       "type": "gradient-heading",
+      "disabled": true,
       "name": "Gradient Heading",
       "settings": {
         "heading_text": "What Our [gradient]User[/gradient] Says",
@@ -627,6 +635,7 @@
         "review_KbGqyr",
         "review_JKtM8P"
       ],
+      "disabled": true,
       "name": "Custom Reviews",
       "settings": {
         "padding_top": 0,
@@ -746,6 +755,7 @@
         "box_a74xJA",
         "box_twyRii"
       ],
+      "disabled": true,
       "name": "Text with Boxes",
       "settings": {
         "main_heading": "Join a Global Community and Master Timeless Skills!",
@@ -765,6 +775,7 @@
     },
     "gradient_heading_K93YEJ": {
       "type": "gradient-heading",
+      "disabled": true,
       "name": "Gradient Heading",
       "settings": {
         "heading_text": "Your new SFX workflow is [gradient] here[/gradient]",
@@ -807,7 +818,7 @@
           "type": "variant_picker",
           "settings": {
             "variant_labels": true,
-            "picker_type": "button",
+            "picker_type": "dropdown",
             "product_dynamic_variants_enable": true,
             "color_swatches": false
           }
@@ -882,6 +893,9 @@
         "share",
         "judge_me_reviews_review_widget_wajyLA"
       ],
+      "custom_css": [
+        ".variant-wrapper--dropdown {width: 100%;}"
+      ],
       "settings": {
         "sku_enable": false,
         "image_position": "left",
@@ -893,6 +907,24 @@
         "mobile_layout": "partial",
         "enable_video_looping": true,
         "product_video_style": "muted"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "custom_css": [
+        ".section-header__title {color: #fff; text-align: center; font-family: Poppins; font-size: 54px; font-style: normal; font-weight: 400;}",
+        "@media (max-width: 768px) {.section-header__title {color: #fff; text-align: center; font-family: Poppins; font-size: 25px; font-style: normal; font-weight: 400; }}"
+      ],
+      "settings": {
+        "product_recommendations_heading": "You may also like !",
+        "related_count": 3,
+        "products_per_row": 3
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "recent_count": 5
       }
     },
     "faq_YczCUf": {
@@ -965,6 +997,7 @@
         "question_7nMFht",
         "question_atDKA3"
       ],
+      "disabled": true,
       "name": "FAQ",
       "settings": {
         "padding_top": 30,
@@ -1003,6 +1036,7 @@
     },
     "contact_form_fixed_YUyQkj": {
       "type": "contact-form-fixed",
+      "disabled": true,
       "name": "Contact Form Latest",
       "settings": {
         "section_background_color": "#1a1a1a",
@@ -1024,24 +1058,6 @@
         "gradient_text_to": "#ede6ca",
         "button_border_radius": 6
       }
-    },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "custom_css": [
-        ".section-header__title {color: #fff; text-align: center; font-family: Poppins; font-size: 54px; font-style: normal; font-weight: 400;}",
-        "@media (max-width: 768px) {.section-header__title {color: #fff; text-align: center; font-family: Poppins; font-size: 25px; font-style: normal; font-weight: 400; }}"
-      ],
-      "settings": {
-        "product_recommendations_heading": "You may also like !",
-        "related_count": 3,
-        "products_per_row": 3
-      }
-    },
-    "recently-viewed": {
-      "type": "recently-viewed",
-      "settings": {
-        "recent_count": 5
-      }
     }
   },
   "order": [
@@ -1059,9 +1075,9 @@
     "text_with_boxes_wV69rH",
     "gradient_heading_K93YEJ",
     "main",
-    "faq_YczCUf",
-    "contact_form_fixed_YUyQkj",
     "product-recommendations",
-    "recently-viewed"
+    "recently-viewed",
+    "faq_YczCUf",
+    "contact_form_fixed_YUyQkj"
   ]
 }
